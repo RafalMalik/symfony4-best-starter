@@ -1,0 +1,55 @@
+version: '3'
+services:
+
+  apache:
+    build: .docker/apache
+    container_name: s4bs_apache
+    ports:
+      - 1182:80
+    volumes:
+      - .docker/config/vhosts:/etc/apache2/sites-enabled
+      - .:/home/wwwroot/s4bs
+    depends_on:
+      - php
+
+  mysql:
+    image: mysql:5.7
+    container_name: s4bs_mysql
+    volumes:
+      - .docker/data:/var/lib/mysql
+    environment:
+      MYSQL_CONNECTION: mysql
+      MYSQL_ROOT_PASSWORD: klajmax
+      MYSQL_DATABASE: klajmax
+      MYSQL_USER: klajmax
+      MYSQL_PASSWORD: klajmax
+
+  php:
+    build: .docker/php
+    container_name: s4bs_php
+    volumes:
+      - .:/home/wwwroot/s4bs
+    environment:
+      - maildev_host=s4bs_maildev
+    depends_on:
+      - maildev
+      - mysql
+    links:
+      - mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: s4bs_phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - 8182:80
+    links:
+      - mysql
+
+  maildev:
+    image: djfarrelly/maildev
+    container_name: s4bs_maildev
+    ports:
+      - 8002:80

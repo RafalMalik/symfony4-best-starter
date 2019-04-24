@@ -21,3 +21,6 @@
 .idea/
 ###< IDEA ###
 
+###> DOCKER ###
+.docker/data
+###< DOCKER ###
