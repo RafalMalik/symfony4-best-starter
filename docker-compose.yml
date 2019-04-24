@@ -19,10 +19,10 @@ services:
       - .docker/data:/var/lib/mysql
     environment:
       MYSQL_CONNECTION: mysql
-      MYSQL_ROOT_PASSWORD: klajmax
-      MYSQL_DATABASE: klajmax
-      MYSQL_USER: klajmax
-      MYSQL_PASSWORD: klajmax
+      MYSQL_ROOT_PASSWORD: s4bs
+      MYSQL_DATABASE: s4bs
+      MYSQL_USER: s4bs
+      MYSQL_PASSWORD: s4bs
 
   php:
     build: .docker/php
