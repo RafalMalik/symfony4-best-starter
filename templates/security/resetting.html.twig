@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset password{% endblock %}
+
+{% block body %}
+<form method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <h1 class="h3 mb-3 font-weight-normal">Reset password</h1>
+    <label for="inputEmail" class="sr-only">Email</label>
+    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+
+    <button class="btn btn-lg btn-primary" type="submit">
+        RESET
+    </button>
+</form>
+{% endblock %}

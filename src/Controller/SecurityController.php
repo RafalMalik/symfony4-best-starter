@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Security\ResetPasswordManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -42,10 +44,55 @@ class SecurityController extends AbstractController
     }
 
 
-    public function resetting() {
+    /**
+     * View where user fill email address and request change password email.
+     *
+     * @Route("/reset-request", name="app_reset_request")
+     */
+    public function resetRequest(Request $request, ResetPasswordManager $resetPasswordManager) {
         /**
          * @todo Make resetting password form
          */
+
+        if ($request->isMethod('POST') && $request->request->get('email') ) {
+
+            try {
+
+                $resetPasswordManager->processRequest($request->request->get('email'));
+
+            } catch (\Exception $e) {
+                var_dump('nie ma takiego emaila');
+            }
+
+
+
+            var_dump('teraz bedzie logika odpowiedzialna za resetowanie hasla');
+            exit();
+        }
+
+        return $this->render('security/reset_request.html.twig', [
+            'error' => []
+        ]);
+    }
+
+
+    /**
+     * @Route("/resetting/{resettingToken}", name="app_resetting")
+     * @todo Make resetting form, when user with token can change his password.
+     */
+    public function resetting(Request $request, $resettingToken, ResetPasswordManager $resetPasswordManager) {
+
+        if (!$resetPasswordManager->isValidToken($resettingToken)) {
+            var_dump('niepoprawny token');exit();
+        }
+
+
+        var_dump($resettingToken);
+
+        return $this->render('security/resetting.html.twig', [
+            'error' => []
+        ]);
+
     }
 
 
