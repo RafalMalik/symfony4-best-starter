@@ -42,4 +42,12 @@ class SecurityController extends AbstractController
     }
 
 
+    public function resetting() {
+        /**
+         * @todo Make resetting password form
+         */
+    }
+
+
+
 }
