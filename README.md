@@ -31,3 +31,15 @@ Create tests to security, registration and ACL
 8. Webpack
 
 Minify all
+
+9 Docs
+
+Controllers
+
+Entities
+
+Bundles
+
+ACL
+
+
