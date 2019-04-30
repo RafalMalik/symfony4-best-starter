@@ -87,6 +87,22 @@ class SecurityController extends AbstractController
         }
 
 
+        if ($request->isMethod('POST')) {
+
+            try {
+                $resetPasswordManager->changePassword($resettingToken, $request->request->get('password'));
+
+                return $this->redirectToRoute('app_login');
+            } catch (\Exception $e) {
+                var_dump('COS NIE TAK KURWA');
+                exit();
+            }
+
+
+
+        }
+
+
         var_dump($resettingToken);
 
         return $this->render('security/resetting.html.twig', [

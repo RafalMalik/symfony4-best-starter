@@ -143,14 +143,35 @@ class ResetPasswordManager
             return false;
         }
 
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(
-            ['resettingToken' => $resettingToken]
-        );
+        $user = $this->getUserByToken($resettingToken);
 
         if (!$user) {
             return false;
         }
 
         return true;
+    }
+
+
+    private function getUserByToken(string $resettingToken)
+    {
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(
+            ['resettingToken' => $resettingToken]
+        );
+
+        return $user;
+    }
+
+    public function changePassword($resettingToken, $plainPassword)
+    {
+        $user = $this->getUserByToken($resettingToken);
+
+        $user->setPassword($this->passwordEncoder->encodePassword($user, $plainPassword));
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        var_dump('zmieniono password dla jakiegos typa');
+
     }
 }
