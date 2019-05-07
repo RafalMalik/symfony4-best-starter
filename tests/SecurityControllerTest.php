@@ -26,6 +26,11 @@ class SecurityControllerTest extends WebTestCase
 
         $crawler = $client->followRedirect();
 
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("Email could not be found1.")')->count()
+        );
+
         var_dump($client->getResponse()->getContent());
         //$buttonCrawlerNode = $crawler->selectButton('_submit');
         //$form = $buttonCrawlerNode->form();
