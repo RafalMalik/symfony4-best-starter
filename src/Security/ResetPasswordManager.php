@@ -43,7 +43,6 @@ class ResetPasswordManager
      */
     public function processRequest(string $email)
     {
-
         $user = $this->getUser($email);
 
         if (!$user) {
