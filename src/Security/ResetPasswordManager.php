@@ -69,26 +69,7 @@ class ResetPasswordManager
         $this->entityManager->flush();
     }
 
-    public function supports(Request $request)
-    {
-        return 'app_login' === $request->attributes->get('_route')
-            && $request->isMethod('POST');
-    }
 
-    public function getCredentials(Request $request)
-    {
-        $credentials = [
-            'email' => $request->request->get('email'),
-            'password' => $request->request->get('password'),
-            'csrf_token' => $request->request->get('_csrf_token'),
-        ];
-        $request->getSession()->set(
-            Security::LAST_USERNAME,
-            $credentials['email']
-        );
-
-        return $credentials;
-    }
 
     public function getUser(string $email)
     {
@@ -143,6 +124,7 @@ class ResetPasswordManager
             return false;
         }
 
+        /** @var User $user */
         $user = $this->getUserByToken($resettingToken);
 
         if (!$user) {
@@ -162,16 +144,21 @@ class ResetPasswordManager
         return $user;
     }
 
+    /**
+     * Find User by token,
+     *
+     * @param $resettingToken
+     * @param $plainPassword
+     */
     public function changePassword($resettingToken, $plainPassword)
     {
         $user = $this->getUserByToken($resettingToken);
 
-        $user->setPassword($this->passwordEncoder->encodePassword($user, $plainPassword));
+        $user->setPassword($this->passwordEncoder->encodePassword($user, $plainPassword))
+            ->setResettingToken(null);
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
-
-        var_dump('zmieniono password dla jakiegos typa');
 
     }
 }

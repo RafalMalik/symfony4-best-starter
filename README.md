@@ -2,11 +2,15 @@
 
 1. Docker
 
-Structure, run, run_script, 
+Structure, run, run_script, run script like nsid
 
 2. Users
 
-Register, login, logout, resetting, profile
+Register, 
+login, 
+logout, 
+resetting, 
+profile
 
 3. Database
 
