@@ -12,12 +12,23 @@ class SecurityControllerTest extends WebTestCase
         $client = static::createClient(array(), array(
             'HTTP_HOST'       => 'localhost:1182',
         ));
-        $crawler = $client->request('GET', '/login');
 
-        $this->assertSame(200, $client->getResponse()->getStatusCode(), 'CHUJ');
+        $client->request('GET', '/login');
 
-        $buttonCrawlerNode = $crawler->selectButton('_submit');
-        $form = $buttonCrawlerNode->form();
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+
+        //var_dump($client->getResponse()->getContent());
+
+        $crawler = $client->submitForm('Sign in', [
+            'email' => 'jano',
+            'password' => 'my safe password',
+        ]);
+
+        $crawler = $client->followRedirect();
+
+        var_dump($client->getResponse()->getContent());
+        //$buttonCrawlerNode = $crawler->selectButton('_submit');
+        //$form = $buttonCrawlerNode->form();
 //        $data = array('_username' => 'root','_password' => 'toor');
 //        $client->submit($form,$data);
 //
