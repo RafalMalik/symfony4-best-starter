@@ -40,6 +40,21 @@ class User implements UserInterface
      */
     private $resettingToken;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * User constructor.
+     * @param $createdAt
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -126,6 +141,18 @@ class User implements UserInterface
     public function setResettingToken(?string $resettingToken): self
     {
         $this->resettingToken = $resettingToken;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

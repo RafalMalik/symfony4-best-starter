@@ -44,5 +44,8 @@ class ApplicationAvailabilityTest extends WebTestCase
     public function secureUrlProvider()
     {
         yield ['/'];
+        yield ['/profile'];
+        yield ['/profile/edit'];
+        yield ['/profile/change-password'];
     }
 }

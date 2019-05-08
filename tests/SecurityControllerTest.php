@@ -36,7 +36,6 @@ class SecurityControllerTest extends WebTestCase
         );
     }
 
-
     public function successLoginProvider()
     {
         yield [['email' => 'huj@o2.pl', 'password' => '123456']];
