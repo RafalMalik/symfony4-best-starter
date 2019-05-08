@@ -6,8 +6,8 @@ Structure, run, run_script, run script like nsid
 
 2. Users
 
-Register, 
-login, 
+Register, OK
+login, OK
 logout, 
 resetting, 
 profile
