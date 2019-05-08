@@ -6,17 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ApplicationAvailabilityTest extends WebTestCase
 {
-    public function testSomething()
-    {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/');
-
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
-        $this->assertContains('Hello World', $crawler->filter('h1')->text());
-    }
 
     /**
-     * @dataProvider urlProvider
+     * Check that pages are public available.
+     *
+     * @dataProvider successUrlProvider
      */
     public function testPageIsSuccessful($url)
     {
@@ -26,13 +20,29 @@ class ApplicationAvailabilityTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function urlProvider()
+    public function successUrlProvider()
+    {
+        yield ['/login'];
+        yield ['/register'];
+        yield ['/reset-request'];
+    }
+
+    /**
+     * Check that pages are public available.
+     *
+     * @dataProvider secureUrlProvider
+     */
+    public function testPageIsSecure($url)
+    {
+        $client = self::createClient();
+        $client->request('GET', $url);
+
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
+    }
+
+
+    public function secureUrlProvider()
     {
         yield ['/'];
-        yield ['/posts'];
-        yield ['/post/fixture-post-1'];
-        yield ['/blog/category/fixture-category'];
-        yield ['/archives'];
-        // ...
     }
 }
