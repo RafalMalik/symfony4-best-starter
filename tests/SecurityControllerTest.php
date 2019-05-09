@@ -6,6 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SecurityControllerTest extends WebTestCase
 {
+    private $client = null;
+
+    public function setUp()
+    {
+        $this->client = static::createClient(array(), array(
+            'HTTP_HOST'       => 'localhost:1182',
+        ));
+    }
 
     /**
      * Check that user successfully login with valid credentials.
@@ -15,21 +23,20 @@ class SecurityControllerTest extends WebTestCase
      */
     public function testSuccessLogin($credentials)
     {
-        $client = static::createClient(array(), array(
-            'HTTP_HOST'       => 'localhost:1182',
-        ));
+        /* Go to login page and check that status = 200 */
+        $this->client->request('GET', '/login');
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
-        $client->request('GET', '/login');
-
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
-
-        $client->submitForm('Sign in', [
+        /* Fill login form  */
+        $this->client->submitForm('Sign in', [
             'email' => $credentials['email'],
             'password' => $credentials['password'],
         ]);
 
-        $crawler = $client->followRedirect();
+        /* Handle redirect after success login */
+        $crawler = $this->client->followRedirect();
 
+        /* Check that page after redirect contains search phrase */
         $this->assertGreaterThan(
             0,
             $crawler->filter('html:contains("Hello AppController")')->count()
@@ -50,21 +57,20 @@ class SecurityControllerTest extends WebTestCase
      */
     public function testFailedLogin($credentials)
     {
-        $client = static::createClient(array(), array(
-            'HTTP_HOST'       => 'localhost:1182',
-        ));
+        /* Go to login page and check that status = 200 */
+        $this->client->request('GET', '/login');
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
-        $client->request('GET', '/login');
-
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
-
-        $client->submitForm('Sign in', [
+        /* Fill form with invalid data */
+        $this->client->submitForm('Sign in', [
             'email' => $credentials['email'],
             'password' => $credentials['password'],
         ]);
 
-        $crawler = $client->followRedirect();
+        /* Handle redirect after login */
+        $crawler = $this->client->followRedirect();
 
+        /* Check that page after redirect contains once login error */
         $this->assertGreaterThan(
             0,
             $crawler->filter('html:contains("Email could not be found.")')->count() +
