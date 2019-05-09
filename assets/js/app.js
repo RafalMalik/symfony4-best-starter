@@ -21,5 +21,5 @@ require('bootstrap');
 // require('bootstrap/js/dist/popover');
 
 $(document).ready(function() {
-    alert('jquery works');
+    //alert('jquery works');
 });
