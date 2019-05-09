@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\ChangePasswordType;
+use App\Form\ProfileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +19,7 @@ class ProfileController extends AbstractController
      *
      * @todo Make change password form and view.
      */
-    public function changePassword(Request $request,  UserPasswordEncoderInterface $passwordEncoder)
+    public function changePassword(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = $this->getUser();
         $form = $this->createForm(ChangePasswordType::class, $user);
@@ -52,6 +53,33 @@ class ProfileController extends AbstractController
         ));
     }
 
+    /**
+     * @Route("/profile/edit", name="app_profile_edit")
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @todo Make view with user data.
+     */
+    public function edit(Request $request)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(ProfileType::class, $user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+
+        }
+
+
+        return $this->render('profile/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 
     /**
      * @Route("/profile/{user}", name="app_profile")
@@ -66,20 +94,5 @@ class ProfileController extends AbstractController
             'user' => $user ?? $this->getUser()
         ]);
     }
-
-
-    /**
-     * @Route("/edit", name="app_profile_edit")
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @todo Make view with user data.
-     */
-    public function edit(User $user = null)
-    {
-        return $this->render('profile/edit.html.twig', [
-            'user' => $user ?? $this->getUser()
-        ]);
-    }
-
 
 }
