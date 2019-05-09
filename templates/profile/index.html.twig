@@ -3,5 +3,8 @@
 {% block title %}Hello ProfileController!{% endblock %}
 
 {% block body %}
-{{ dump(user) }}
+
+    <h1>Profile/index</h1>
+    <h3>{{ user.email }}</h3>
+    {#{{ dump(user) }}#}
 {% endblock %}

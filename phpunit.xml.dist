@@ -11,6 +11,7 @@
         <ini name="error_reporting" value="-1" />
         <server name="APP_ENV" value="test" force="true" />
         <server name="SHELL_VERBOSITY" value="-1" />
+        <env name="DATABASE_URL" value="mysql://s4bs:s4bs@mysql:3306/s4bs"/>
     </php>
 
     <testsuites>
