@@ -28,6 +28,8 @@ RUN	echo "deb https://deb.nodesource.com/node_9.x jessie main" >> /etc/apt/sourc
 	apt-get install -y --force-yes nodejs yarn && \
 	rm -f /etc/apt/sources.list.d/nodejs.list
 
+RUN	yarn add sass-loader@^7.0.1 node-sass --dev
+
 RUN groupadd dev -g 999
 RUN useradd dev -g dev -d /home/dev -m
 
