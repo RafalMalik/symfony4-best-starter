@@ -73,7 +73,9 @@ class UserControllerTest extends WebTestCase
         $this->logIn();
 
         /* Go to profile page and check status = 200 */
-        $crawler = $this->client->request('GET', '/user');
+        $this->client->request('GET', '/user');
+
+        $crawler = $this->client->followRedirect();
 
         /* Check that response status is HTTP::OK */
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
@@ -82,6 +84,14 @@ class UserControllerTest extends WebTestCase
         $this->assertGreaterThan(
             0,
             $crawler->filter('html:contains("user/index")')->count()
+        );
+
+        /* Check that user table row are equal summary number of users */
+        $users = $this->em->getRepository(User::class)->findAll();
+
+        $this->assertEquals(
+            count($users),
+            $crawler->filter('.table-row')->count()
         );
     }
 
@@ -101,6 +111,24 @@ class UserControllerTest extends WebTestCase
         $this->assertGreaterThan(
             0,
             $crawler->filter('html:contains("user/new")')->count()
+        );
+
+        /* Fill form and create user */
+        $this->client->submitForm('Create', [
+            'email' => 'email@o2.pl',
+            'password' => '123456',
+        ]);
+
+        /* Check that we are redirect to user list with flash message */
+        $crawler = $this->client->followRedirect();
+
+        /* Check that response status is HTTP::OK */
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+
+        /* Check that page after redirect contains flashbag info */
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("User has been added")')->count()
         );
     }
 
@@ -123,10 +151,18 @@ class UserControllerTest extends WebTestCase
             0,
             $crawler->filter('html:contains("user/show")')->count()
         );
+
+        /* Check that profile data are equals with stored user */
+        $user = $this->em->getRepository(User::class)->find(3);
+
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("' . $user->getEmail() . '")')->count()
+        );
     }
 
     /**
-     * Test to user/show action
+     * Test to user/edit action
      */
     public function testEdit()
     {
@@ -144,6 +180,25 @@ class UserControllerTest extends WebTestCase
             0,
             $crawler->filter('html:contains("user/edit")')->count()
         );
+
+        /* Fill form and create user */
+        $this->client->submitForm('Save', [
+            'email' => 'email@o2.pl',
+            'password' => '123456',
+        ]);
+
+        /* Check that we are redirect to user list with flash message */
+        $crawler = $this->client->followRedirect();
+
+        /* Check that response status is HTTP::OK */
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+
+        /* Check that page after redirect contains flashbag info */
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("User has been edited")')->count()
+        );
+
     }
 
     /**
@@ -164,6 +219,16 @@ class UserControllerTest extends WebTestCase
         $this->assertGreaterThan(
             0,
             $crawler->filter('html:contains("user/delete")')->count()
+        );
+        $crawler = $this->client->followRedirect();
+
+        /* Check that response status is HTTP::OK */
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+
+        /* Check that page after redirect contains flashbag info */
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("User has been deleted")')->count()
         );
     }
 
