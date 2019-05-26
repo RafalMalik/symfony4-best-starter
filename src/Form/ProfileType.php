@@ -15,9 +15,9 @@ class ProfileType extends AbstractType
         $builder
             ->add('email')
             //->add('roles')
-            ->add('password')
-            ->add('resettingToken')
-            ->add('createdAt')
+            //->add('password')
+            //->add('resettingToken')
+            //->add('createdAt')
             ->add('submit', SubmitType::class, array(
                 'attr' => array(
                     'class' => 'btn btn-primary btn-block'

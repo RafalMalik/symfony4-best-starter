@@ -54,10 +54,10 @@ class ProfileControllerTest extends WebTestCase
         $this->client->getCookieJar()->set($cookie);
 
         /* Go to profile page and check status = 200 */
-        $this->client->request('GET', '/');
+        $crawler = $this->client->request('GET', '/');
 
         /* Handle redirect after success login to app/index page */
-        $crawler = $this->client->followRedirect();
+        //$crawler = $this->client->followRedirect();
 
         /* Check that page after redirect contains search phrase */
         $this->assertGreaterThan(
@@ -76,10 +76,10 @@ class ProfileControllerTest extends WebTestCase
         $this->logIn();
 
         /* Go to profile page and check status = 200 */
-        $this->client->request('GET', '/profile');
+        $crawler = $this->client->request('GET', '/profile');
 
         /* Handle redirect after success login to app/index page */
-        $crawler = $this->client->followRedirect();
+        //$crawler = $this->client->followRedirect();
 
         /* Check that response status is HTTP::OK */
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
@@ -98,8 +98,7 @@ class ProfileControllerTest extends WebTestCase
 
         /* Go to profile with parameter = 4 */
         /* Go to profile page and check status = 200 */
-        $this->client->request('GET', '/profile/4');
-        $crawler = $this->client->followRedirect();
+        $crawler = $this->client->request('GET', '/profile/4');
 
         /* Check status = 200 */
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
@@ -128,11 +127,11 @@ class ProfileControllerTest extends WebTestCase
         /* LogIn to application */
         $this->logIn();
 
-        /* Go to profile page and check status = 200 */
-        $this->client->request('GET', '/profile/edit');
+        /* Store user email after send form */
+        $email = $this->user->getEmail();
 
-        /* Handle redirect after success login to app/index page */
-        $crawler = $this->client->followRedirect();
+        /* Go to profile page and check status = 200 */
+        $crawler = $this->client->request('GET', '/profile/edit');
 
         /* Check that response status is HTTP::OK */
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
@@ -143,22 +142,34 @@ class ProfileControllerTest extends WebTestCase
             $crawler->filter('html:contains("profile/edit")')->count()
         );
 
-        /* Search user email in h3 tag */
-        $this->assertGreaterThan(
-            0,
-            $crawler->filter('#profile_email:contains("' . $this->user->getEmail() . '")')->count()
+        /* Check that data in form are real and equals the log in user data */
+        $this->assertEquals(
+            $this->user->getEmail(),
+            $crawler->filter('#profile_email')->attr('value')
         );
 
-        /* Check that data in form are real and equals the log in user data */
-
-
         /* Change email value to invalid - phrase without @ (at) symbol */
+        /* Fill login form  */
+        $crawler = $this->client->submitForm('Submit', [
+            'profile[email]' => 'invalid_email_format'
+        ]);
 
-        /* Send form and handle redirect */
+        /* Handle redirect after save profile form */
+        //$crawler = $this->client->followRedirect();
 
-        /* Find on results page that email field is invalid */
+        /* Check that response status is HTTP::OK */
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+
+        $this->assertGreaterThan(
+            -1,
+            $crawler->filter('html:contains("invalid form data"')->count()
+        );
 
         /* Verify email address is the same as before send form */
+        $this->assertEquals(
+            $this->user->getEmail(),
+            $crawler->filter('#profile_email')->attr('value')
+        );
     }
 
     /**
