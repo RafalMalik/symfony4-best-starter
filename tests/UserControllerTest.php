@@ -115,8 +115,7 @@ class UserControllerTest extends WebTestCase
 
         /* Fill form and create user */
         $this->client->submitForm('Create', [
-            'email' => 'email@o2.pl',
-            'password' => '123456',
+            'email' => 'email@o2.pl'
         ]);
 
         /* Check that we are redirect to user list with flash message */
