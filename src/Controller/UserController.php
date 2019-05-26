@@ -80,10 +80,30 @@ class UserController extends AbstractController
      *
      * @todo Make edit action, when we have form with user data and can edit it.
      */
-    public function edit() {
+    public function edit(Request $request) {
+
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_user_index');
+        }
 
         return $this->render('user/edit.html.twig', [
-            'controller_name' => 'UserController',
+            'form' => $form->createView()
         ]);
     }
 
