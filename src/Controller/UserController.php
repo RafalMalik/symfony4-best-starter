@@ -80,7 +80,7 @@ class UserController extends AbstractController
      *
      * @todo Make edit action, when we have form with user data and can edit it.
      */
-    public function edit(Request $request) {
+    public function edit(Request $request, UserPasswordEncoderInterface $passwordEncoder) {
 
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
