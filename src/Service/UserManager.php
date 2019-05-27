@@ -41,6 +41,7 @@ class UserManager
      * Prepare user before persist, encode password.
      *
      * @param User $user
+     * @return User|null
      */
     public function create(User $user)
     {
@@ -51,8 +52,14 @@ class UserManager
             )
         );
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        try {
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+        } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $exception) {
+            //$this->update($user);
+        }
+
+        return $user;
     }
 
     /**

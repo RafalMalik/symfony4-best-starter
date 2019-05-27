@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Functional;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManager;
