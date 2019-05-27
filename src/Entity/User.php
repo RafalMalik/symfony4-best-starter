@@ -46,6 +46,11 @@ class User implements UserInterface
     private $createdAt;
 
     /**
+     * Not mapped field - only to transport plain password before encode.
+     */
+    private $plainPassword;
+
+    /**
      * User constructor.
      * @param $createdAt
      */
@@ -153,6 +158,18 @@ class User implements UserInterface
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }
