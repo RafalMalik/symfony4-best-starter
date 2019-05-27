@@ -215,7 +215,7 @@ class UserControllerTest extends WebTestCase
             0,
             $crawler->filter('html:contains("user/delete")')->count()
         );
-        $crawler = $this->client->followRedirect();
+//        $crawler = $this->client->followRedirect();
 
         /* Check that response status is HTTP::OK */
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
