@@ -55,6 +55,17 @@ class UserManager
         $this->entityManager->flush();
     }
 
+    /**
+     * Update user in database.
+     *
+     * @param User $user
+     */
+    public function update(User $user)
+    {
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+    }
+
 
     /**
      * Authenticate in firewall as $user.

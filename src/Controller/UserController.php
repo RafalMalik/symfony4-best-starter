@@ -6,12 +6,12 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Service\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 /**
@@ -37,23 +37,15 @@ class UserController extends AbstractController
      *
      * @todo Make action when admin can generate user,
      */
-    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder) {
+    public function new(Request $request, UserManager $userManager)
+    {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $userManager->create($user);
 
             return $this->redirectToRoute('app_user_index');
         }
@@ -64,40 +56,37 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/show", name="app_user_show")
+     * @Route("/show/{user}", name="app_user_show")
      *
+     * @param User $user
+     * @return Response
      * @todo Make show action, some like profile when shown all users data and link to edit profile.
      */
-    public function show() {
+    public function show(User $user)
+    {
         return $this->render('user/show.html.twig', [
-            'controller_name' => 'UserController',
+            'user' => $user
         ]);
 
     }
 
     /**
-     * @Route("/edit", name="app_user_edit")
+     * @Route("/edit/{user}", name="app_user_edit")
      *
+     * @param Request $request
+     * @param User $user
+     * @param UserManager $userManager
+     * @return RedirectResponse|Response
      * @todo Make edit action, when we have form with user data and can edit it.
      */
-    public function edit(Request $request, UserPasswordEncoderInterface $passwordEncoder) {
-
-        $user = new User();
+    public function edit(Request $request, User $user, UserManager $userManager)
+    {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $userManager->update($user);
 
             return $this->redirectToRoute('app_user_index');
         }
@@ -108,11 +97,16 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/delete", name="app_user_delete")
+     * @Route("/delete/{user}", name="app_user_delete")
      *
+     * @param Request $request
+     * @param User $user
+     * @param UserManager $userManager
+     * @return Response
      * @todo Make delete user action -> delete user with all related data.
      */
-    public function delete() {
+    public function delete(Request $request, User $user, UserManager $userManager)
+    {
         return $this->render('user/delete.html.twig', [
             'controller_name' => 'UserController',
         ]);
