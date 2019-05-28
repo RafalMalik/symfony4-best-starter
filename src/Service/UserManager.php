@@ -58,7 +58,7 @@ class UserManager
 
             return $user;
         } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $exception) {
-
+            
             return null;
         }
     }

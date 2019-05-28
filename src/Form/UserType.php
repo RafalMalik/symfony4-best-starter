@@ -17,13 +17,13 @@ class UserType extends AbstractType
             ->add('email')
             ->add('roles', ChoiceType::class, array(
                 'choices' => [
-                    'ROLE_USER' => 'User',
-                    'ROLE_ADMIN' => 'Admin'
+                    'User' => 'ROLE_USER',
+                    'Admin' => 'ROLE_ADMIN'
                 ],
-                'multiple' => true
+                'expanded' => false,
+                'multiple' => true,
             ))
-            ->add('Create', SubmitType::class)
-        ;
+            ->add('Create', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
