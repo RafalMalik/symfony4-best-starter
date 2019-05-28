@@ -33,13 +33,13 @@ class UserControllerTest extends WebTestCase
         ));
 
         $this->em = $this->client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $this->user = $this->em->getRepository(User::class)->find(3);
     }
 
     public function logIn()
     {
         $session = $this->client->getContainer()->get('session');
-
-        $this->user = $this->em->getRepository(User::class)->find(3);
 
         $firewallName = 'main';
 
@@ -52,9 +52,6 @@ class UserControllerTest extends WebTestCase
 
         /* Go to profile page and check status = 200 */
         $crawler = $this->client->request('GET', '/');
-
-        /* Handle redirect after success login to app/index page */
-        //$crawler = $this->client->followRedirect();
 
         /* Check that page after redirect contains search phrase */
         $this->assertGreaterThan(

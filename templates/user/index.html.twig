@@ -5,7 +5,12 @@
 {% block body %}
     <h1>user/index</h1>
 
+    <a href="{{ path('app_user_new') }}">{{ 'create'|trans }}</a>
+
     {% for user in users %}
         <p class="table-row">{{ user.email }}</p>
+        <a href="{{ path('app_user_show', {user: user.id}) }}">{{ 'show'|trans }}</a>
+        <a href="{{ path('app_user_edit', {user: user.id}) }}">{{ 'edit'|trans }}</a>
+        <a href="{{ path('app_user_delete', {user: user.id  }) }}">{{ 'delete'|trans }}</a>
     {% endfor %}
 {% endblock %}
