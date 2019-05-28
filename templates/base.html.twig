@@ -8,13 +8,12 @@
 </head>
 <body>
 
-<div class="container-fluid">
-
+    {% include 'layout/navbar.html.twig' %}
 
     <div class="container">
         {% block body %}{% endblock %}
     </div>
-</div>
+
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
 {% endblock %}
