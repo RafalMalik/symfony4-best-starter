@@ -21,23 +21,53 @@ class UserManagerTest extends KernelTestCase
 
 
     /**
-     * @dataProvider CreateUserProvider
+     * @dataProvider CreateSuccessProvider
+     * @param $userData
      */
-    public function testCreate()
+    public function testCreateSuccess($userData)
     {
         $user = new User();
-        $user->setEmail('testaccount123@test.pl')
-            ->setRoles(['ROLE_USER'])
-            ->setPlainPassword('123456');
+        $user->setEmail($userData['email'])
+            ->setRoles($userData['roles'])
+            ->setPlainPassword($userData['password']);
 
-        $this->userManager->create($user);
+        $persistedUser = $this->userManager->create($user);
 
-        $this->assertTrue(true);
+        /* Check that persisted user is User class instance */
+        $this->assertInstanceOf(User::class, $persistedUser);
+
+        /* Check that persisted userID is not null */
+        $this->assertNotEquals(null, $persistedUser->getId());
+
+        /* Check that user data is valid with $userData */
+        $this->assertEquals($userData['email'], $persistedUser->getEmail());
     }
 
-    public function createUserProvider()
+    public function createSuccessProvider()
     {
-        yield [['email' => 'huj@o2.pl', 'password' => '123456']];
-        yield [['email' => 'dyzio@o2.pl', 'password' => '123456']];
+        yield [['email' => 'huj112@o2.pl', 'password' => '123456', 'roles' => ['ROLE_USER']]];
+    }
+
+
+    /**
+     * @dataProvider createFailedProvider
+     * @param $userData
+     */
+    public function testCreateFailed($userData)
+    {
+        $user = new User();
+        $user->setEmail($userData['email'])
+            ->setRoles($userData['roles'])
+            ->setPlainPassword($userData['password']);
+
+        $persistedUser = $this->userManager->create($user);
+
+        /* Check that user data is valid with $userData */
+        $this->assertEquals(null, $persistedUser);
+    }
+
+    public function createFailedProvider()
+    {
+        yield [['email' => 'huj112@o2.pl', 'password' => '123456', 'roles' => ['ROLE_USER']]];
     }
 }

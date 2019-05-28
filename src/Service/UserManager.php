@@ -55,11 +55,12 @@ class UserManager
         try {
             $this->entityManager->persist($user);
             $this->entityManager->flush();
-        } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $exception) {
-            //$this->update($user);
-        }
 
-        return $user;
+            return $user;
+        } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $exception) {
+
+            return null;
+        }
     }
 
     /**
