@@ -8,8 +8,13 @@
 </head>
 <body>
 
-{% block body %}{% endblock %}
+<div class="container-fluid">
 
+
+    <div class="container">
+        {% block body %}{% endblock %}
+    </div>
+</div>
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
 {% endblock %}
