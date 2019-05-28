@@ -90,6 +90,18 @@ class UserControllerTest extends WebTestCase
             count($users),
             $crawler->filter('.table-row')->count()
         );
+
+        /* Click button "NEW" and redirect to new page */
+        $btnNew    = $crawler->filter('.app-user-index-btn-new')->eq(0)->link();
+        $crawler = $this->client->click($btnNew);
+
+        //$crawler = $this->client->followRedirect();
+
+        /* Check that page contains text user/new */
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("user/new")')->count()
+        );
     }
 
 

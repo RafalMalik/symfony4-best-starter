@@ -5,7 +5,7 @@
 {% block body %}
     <h1>user/index</h1>
 
-    <a href="{{ path('app_user_new') }}">{{ 'create'|trans }}</a>
+    <a href="{{ path('app_user_new') }}" class="app-user-index-btn-new">{{ 'create'|trans }}</a>
 
     {% for user in users %}
         <p class="table-row">{{ user.email }}</p>
