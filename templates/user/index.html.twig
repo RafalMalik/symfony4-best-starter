@@ -7,10 +7,14 @@
 
     <a href="{{ path('app_user_new') }}" class="app-user-index-btn-new">{{ 'create'|trans }}</a>
 
-    {% for user in users %}
+    {% for user in pagination %}
         <p class="table-row">{{ user.email }}</p>
         <a href="{{ path('app_user_show', {user: user.id}) }}">{{ 'show'|trans }}</a>
         <a href="{{ path('app_user_edit', {user: user.id}) }}">{{ 'edit'|trans }}</a>
         <a href="{{ path('app_user_delete', {user: user.id  }) }}">{{ 'delete'|trans }}</a>
     {% endfor %}
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 {% endblock %}

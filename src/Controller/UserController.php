@@ -7,6 +7,7 @@ use App\Form\RegistrationFormType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\Service\UserManager;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,13 +22,17 @@ class UserController extends AbstractController
 {
     /**
      * @Route("/", name="app_user_index")
+     * @param Request $request
      * @param UserRepository $userRepository
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function index(UserRepository $userRepository)
+    public function index(Request $request, UserRepository $userRepository, PaginatorInterface $paginator)
     {
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll()
+            'pagination' => $paginator->paginate(
+                $userRepository->findAll(),
+                $request->query->getInt('page', 1),     10)
         ]);
     }
 
