@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('auth') }}
+    {% endblock %}
+</head>
+<body>
+
+    <div class="container" id="page-container">aa
+        {% block body %}{% endblock %}
+    </div>
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('auth') }}
+{% endblock %}
+</body>
+</html>
