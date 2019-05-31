@@ -42,4 +42,13 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
+
+
+    public function confirmation() {
+
+    }
+
+    public function confirm() {
+
+    }
 }
