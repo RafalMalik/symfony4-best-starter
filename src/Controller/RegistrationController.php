@@ -33,8 +33,6 @@ class RegistrationController extends AbstractController
             /* If you want authenticate as $user, uncomment below line */
             //$userManager->authenticate($user);
 
-            // do anything else you need here, like send an email
-
             return $this->redirectToRoute('app_index');
         }
 

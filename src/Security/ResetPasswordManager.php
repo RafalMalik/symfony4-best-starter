@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\User;
+use App\Service\TwigMailer;
 use Doctrine\ORM\EntityManagerInterface;
 use mysql_xdevapi\Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -26,13 +27,21 @@ class ResetPasswordManager
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
+    private $mailer;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        UrlGeneratorInterface $urlGenerator,
+        CsrfTokenManagerInterface $csrfTokenManager,
+        UserPasswordEncoderInterface $passwordEncoder,
+        TwigMailer $twigMailer
+    )
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->mailer = $twigMailer;
     }
 
 
@@ -50,7 +59,7 @@ class ResetPasswordManager
         }
 
         /** Change user resetting token */
-        $user->getResettingToken($this->getToken());
+        $user->setResettingToken($this->getToken());
 
         /** Send email contains resetting link with token */
         $this->sendResettingEmail($user);
@@ -60,9 +69,8 @@ class ResetPasswordManager
     public function sendResettingEmail(User $user)
     {
 
-        $user->setResettingToken($this->getToken());
-
         var_dump('wysylam niby do typa maila ' . $user->getResettingToken());
+        $this->mailer;
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
@@ -81,25 +89,6 @@ class ResetPasswordManager
         }
 
         return $user;
-    }
-
-    public function checkCredentials($credentials, UserInterface $user)
-    {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
-    }
-
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
-    {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($targetPath);
-        }
-
-        return new RedirectResponse($this->urlGenerator->generate('app_index'));
-    }
-
-    protected function getLoginUrl()
-    {
-        return $this->urlGenerator->generate('app_login');
     }
 
 

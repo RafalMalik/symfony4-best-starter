@@ -31,7 +31,7 @@ class TwigMailer
      * @param array $parameters
      * @return mixed
      */
-    public function send($subject, $to, $template, array $parameters)
+    public function send($subject, $to, $template, array $parameters = [])
     {
         $message = (new Swift_Message($subject))
             ->setFrom('send@example.com')
@@ -46,5 +46,31 @@ class TwigMailer
 
         $this->mailer->send($message);
     }
+
+
+    /**
+     * Send registration email after create user.
+     *
+     */
+    public function registration(User $user) {
+        $this->send(
+            'User created',
+            $user->getEmail(),
+            'email/registration.html.twig'
+        );
+    }
+
+    /**
+     *
+     */
+    public function resetting(User $user) {
+        $this->send(
+            'Reset password',
+            $user->getEmail(),
+            'email/resetting.html.twig'
+        );
+    }
+
+
 
 }

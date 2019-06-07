@@ -25,15 +25,22 @@ class UserManager
     /** @var SessionInterface $session */
     private $session;
 
-    public function __construct(EntityManagerInterface $entityManager,
-                                UserPasswordEncoderInterface $passwordEncoder,
-                                TokenStorageInterface $tokenStorage,
-                                SessionInterface $session)
+    /** @var TwigMailer $mailer */
+    private $mailer;
+
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        UserPasswordEncoderInterface $passwordEncoder,
+        TokenStorageInterface $tokenStorage,
+        SessionInterface $session,
+        TwigMailer $twigMailer
+    )
     {
         $this->entityManager = $entityManager;
         $this->passwordEncoder = $passwordEncoder;
         $this->tokenStorage = $tokenStorage;
         $this->session = $session;
+        $this->mailer = $twigMailer;
     }
 
 
@@ -56,9 +63,12 @@ class UserManager
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
+            // Here send confirmation email
+            $this->mailer->registration($user);
+
             return $user;
         } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $exception) {
-            
+
             return null;
         }
     }
@@ -98,11 +108,33 @@ class UserManager
      * @param $firewall
      * @return UsernamePasswordToken
      */
-    public function createToken(User $user, $firewall) {
+    public function createToken(User $user, $firewall)
+    {
         $token = new UsernamePasswordToken($user, null, $firewall, $user->getRoles());
 
         return $token;
     }
 
+    /**
+     *
+     * Get user object by email address.
+     *
+     * @param string $email
+     *
+     * @return User|null
+     */
+    public function getUser(string $email)
+    {
+        /** @var User $user */
+        $user = $this->entityManager->getRepository(User::class)->findOneBy([
+            'email' => $email
+        ]);
+
+        if (!$user) {
+            return null;
+        }
+
+        return $user;
+    }
 
 }
