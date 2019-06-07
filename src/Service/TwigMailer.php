@@ -5,7 +5,9 @@ namespace App\Service;
 use App\Entity\User;
 use Swift_Mailer;
 use Swift_Message;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Templating\EngineInterface;
+
 
 class TwigMailer
 {
@@ -16,10 +18,9 @@ class TwigMailer
     /** @var EngineInterface $templating */
     private $templating;
 
-    public function __construct(Swift_Mailer $mailer, EngineInterface $templating)
+    public function __construct(Swift_Mailer $mailer)
     {
         $this->mailer = $mailer;
-        $this->templating = $templating;
     }
 
 
@@ -32,7 +33,7 @@ class TwigMailer
      */
     public function send($subject, $to, $template, array $parameters = [])
     {
-        $message = (new Swift_Message($subject))
+        $message = (new TemplatedEmail($subject))
             ->setFrom('send@example.com')
             ->setTo($to)
             ->setBody(
