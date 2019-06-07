@@ -17,16 +17,16 @@ class UserManager
     private $entityManager;
 
     /** @var UserPasswordEncoderInterface $passwordEncoder */
-    private $passwordEncoder;
+    protected $passwordEncoder;
 
     /** @var TokenStorageInterface $tokenStorage */
-    private $tokenStorage;
+    protected $tokenStorage;
 
     /** @var SessionInterface $session */
     private $session;
 
     /** @var TwigMailer $mailer */
-    private $mailer;
+    protected $mailer;
 
     public function __construct(
         EntityManagerInterface $entityManager,

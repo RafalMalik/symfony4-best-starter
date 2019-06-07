@@ -57,7 +57,7 @@ class ResetPasswordManager
      */
     public function processRequest(string $email)
     {
-        $user = $this->userManager->getUser($email);
+        $user = $this->userManager->getUser(['email' => $email]);
 
         if (!$user) {
             throw new \Exception('NIE MA TAKIEGO EMAIL W BAZIE');
@@ -71,7 +71,7 @@ class ResetPasswordManager
 
         /** Send email contains resetting link with token */
         $this->mailer->resetting($user);
-    }
+            }
 
 
     /**
