@@ -6,6 +6,7 @@ use App\Entity\User;
 use Swift_Mailer;
 use Swift_Message;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Templating\EngineInterface;
 
 
@@ -18,7 +19,7 @@ class TwigMailer
     /** @var EngineInterface $templating */
     private $templating;
 
-    public function __construct(Swift_Mailer $mailer)
+    public function __construct(MailerInterface $mailer)
     {
         $this->mailer = $mailer;
     }
@@ -30,21 +31,18 @@ class TwigMailer
      * @param $template
      * @param array $parameters
      * @return mixed
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function send($subject, $to, $template, array $parameters = [])
     {
-        $message = (new TemplatedEmail($subject))
-            ->setFrom('send@example.com')
-            ->setTo($to)
-            ->setBody(
-                $this->renderView(
-                    $template,
-                    $parameters
-                ),
-                'text/html'
-            );
+        $email = (new TemplatedEmail())
+            ->from('fabien@example.com')
+            ->to($to)
+            ->subject($subject)
+            ->htmlTemplate($template)
+            ->context($parameters);
 
-        $this->mailer->send($message);
+        $this->mailer->send($email);
     }
 
 
