@@ -116,25 +116,16 @@ class UserManager
     }
 
     /**
+     * Search user by criteria array [key => value]
      *
-     * Get user object by email address.
-     *
-     * @param string $email
-     *
+     * @param array $criteria
      * @return User|null
      */
-    public function getUser(string $email)
+    public function getUser(array $criteria)
     {
         /** @var User $user */
-        $user = $this->entityManager->getRepository(User::class)->findOneBy([
-            'email' => $email
-        ]);
-
-        if (!$user) {
-            return null;
-        }
+        $user = $this->entityManager->getRepository(User::class)->findOneBy($criteria);
 
         return $user;
     }
-
 }

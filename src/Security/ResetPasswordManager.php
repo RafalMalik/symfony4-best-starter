@@ -4,6 +4,7 @@ namespace App\Security;
 
 use App\Entity\User;
 use App\Service\TwigMailer;
+use App\Service\UserManager;
 use Doctrine\ORM\EntityManagerInterface;
 use mysql_xdevapi\Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -28,13 +29,15 @@ class ResetPasswordManager
     private $csrfTokenManager;
     private $passwordEncoder;
     private $mailer;
+    private $userManager;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         UrlGeneratorInterface $urlGenerator,
         CsrfTokenManagerInterface $csrfTokenManager,
         UserPasswordEncoderInterface $passwordEncoder,
-        TwigMailer $twigMailer
+        TwigMailer $twigMailer,
+        UserManager $userManager
     )
     {
         $this->entityManager = $entityManager;
@@ -42,6 +45,7 @@ class ResetPasswordManager
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
         $this->mailer = $twigMailer;
+        $this->userManager = $userManager;
     }
 
 
@@ -52,7 +56,7 @@ class ResetPasswordManager
      */
     public function processRequest(string $email)
     {
-        $user = $this->getUser($email);
+        $user = $this->userManager->getUser($email);
 
         if (!$user) {
             throw new \Exception('NIE MA TAKIEGO EMAIL W BAZIE');
@@ -60,6 +64,9 @@ class ResetPasswordManager
 
         /** Change user resetting token */
         $user->setResettingToken($this->getToken());
+
+        /* Update user after change resetting token */
+        $this->userManager->update($user);
 
         /** Send email contains resetting link with token */
         $this->sendResettingEmail($user);
@@ -72,24 +79,9 @@ class ResetPasswordManager
         var_dump('wysylam niby do typa maila ' . $user->getResettingToken());
         $this->mailer;
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
     }
 
 
-
-    public function getUser(string $email)
-    {
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(
-            ['email' => $email]
-        );
-
-        if (!$user) {
-            return false;
-        }
-
-        return $user;
-    }
 
 
     /**
@@ -123,14 +115,7 @@ class ResetPasswordManager
     }
 
 
-    private function getUserByToken(string $resettingToken)
-    {
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(
-            ['resettingToken' => $resettingToken]
-        );
 
-        return $user;
-    }
 
     /**
      * Find User by token,

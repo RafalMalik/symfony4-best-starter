@@ -50,7 +50,7 @@ class TwigMailer
 
     /**
      * Send registration email after create user.
-     *
+     * @param User $user
      */
     public function registration(User $user) {
         $this->send(
@@ -61,7 +61,8 @@ class TwigMailer
     }
 
     /**
-     *
+     * Send resetting email after change request.
+     * @param User $user
      */
     public function resetting(User $user) {
         $this->send(
