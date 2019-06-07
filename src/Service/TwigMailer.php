@@ -3,14 +3,9 @@
 namespace App\Service;
 
 use App\Entity\User;
-use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Swift_Mailer;
 use Swift_Message;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 class TwigMailer
 {
@@ -18,9 +13,13 @@ class TwigMailer
     /** @var Swift_Mailer $mailer */
     private $mailer;
 
-    public function __construct(Swift_Mailer $mailer)
+    /** @var EngineInterface $templating */
+    private $templating;
+
+    public function __construct(Swift_Mailer $mailer, EngineInterface $templating)
     {
         $this->mailer = $mailer;
+        $this->templating = $templating;
     }
 
 
