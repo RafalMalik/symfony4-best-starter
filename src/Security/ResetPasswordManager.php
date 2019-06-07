@@ -53,6 +53,7 @@ class ResetPasswordManager
      * Process logic of resetting password, check users, change token and send email.
      *
      * @param string $email
+     * @throws \Exception
      */
     public function processRequest(string $email)
     {
@@ -69,19 +70,8 @@ class ResetPasswordManager
         $this->userManager->update($user);
 
         /** Send email contains resetting link with token */
-        $this->sendResettingEmail($user);
-
+        $this->mailer->resetting($user);
     }
-
-    public function sendResettingEmail(User $user)
-    {
-
-        var_dump('wysylam niby do typa maila ' . $user->getResettingToken());
-        $this->mailer;
-
-    }
-
-
 
 
     /**
@@ -99,13 +89,12 @@ class ResetPasswordManager
      */
     public function isValidToken(string $resettingToken): bool
     {
-
         if (!$resettingToken) {
             return false;
         }
 
         /** @var User $user */
-        $user = $this->getUserByToken($resettingToken);
+        $user = $this->userManager->getUser(['resettingToken' => $resettingToken]);
 
         if (!$user) {
             return false;
@@ -115,23 +104,19 @@ class ResetPasswordManager
     }
 
 
-
-
     /**
-     * Find User by token,
+     * Change password in database.
      *
      * @param $resettingToken
      * @param $plainPassword
      */
     public function changePassword($resettingToken, $plainPassword)
     {
-        $user = $this->getUserByToken($resettingToken);
+        $user = $this->userManager->getUser(['resettingToken' => $resettingToken]);
 
         $user->setPassword($this->passwordEncoder->encodePassword($user, $plainPassword))
             ->setResettingToken(null);
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-
+        $this->userManager->update($user);
     }
 }
