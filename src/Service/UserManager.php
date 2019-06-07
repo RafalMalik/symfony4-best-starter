@@ -63,7 +63,7 @@ class UserManager
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
-            // Here send confirmation email
+            /* Send registration email to user */
             $this->mailer->registration($user);
 
             return $user;

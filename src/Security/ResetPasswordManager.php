@@ -71,7 +71,7 @@ class ResetPasswordManager
 
         /** Send email contains resetting link with token */
         $this->mailer->resetting($user);
-            }
+    }
 
 
     /**
