@@ -30,6 +30,8 @@ class UserManagerTest extends TestCase
         $session = $this->createMock(SessionInterface::class);
         $mailer = $this->createMock(TwigMailer::class);
 
+
+
         $this->userManager = new UserManager($this->em, $encoder, $tokenStorage, $session, $mailer);
     }
 

@@ -81,7 +81,7 @@ class UserManagerTest extends KernelTestCase
 
     public function createFailedProvider()
     {
-        yield [['email' => 'huj112@o2.pl', 'password' => '123456', 'roles' => ['ROLE_USER']]];
+        yield [['email' => 'huj112o2.pl', 'password' => '123456', 'roles' => ['ROLE_USER']]];
     }
 
     private function truncateEntities()
