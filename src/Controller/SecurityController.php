@@ -48,13 +48,17 @@ class SecurityController extends AbstractController
      * View where user fill email address and request change password email.
      *
      * @Route("/reset-request", name="app_reset_request")
+     * @param Request $request
+     * @param ResetPasswordManager $resetPasswordManager
+     * @return Response
      */
-    public function resetRequest(Request $request, ResetPasswordManager $resetPasswordManager) {
+    public function resetRequest(Request $request, ResetPasswordManager $resetPasswordManager)
+    {
         /**
          * @todo Make resetting password form
          */
 
-        if ($request->isMethod('POST') && $request->request->get('email') ) {
+        if ($request->isMethod('POST') && $request->request->get('email')) {
 
             try {
 
@@ -63,7 +67,6 @@ class SecurityController extends AbstractController
             } catch (\Exception $e) {
                 var_dump('nie ma takiego emaila');
             }
-
 
 
             var_dump('teraz bedzie logika odpowiedzialna za resetowanie hasla');
@@ -80,10 +83,12 @@ class SecurityController extends AbstractController
      * @Route("/resetting/{resettingToken}", name="app_resetting")
      * @todo Make resetting form, when user with token can change his password.
      */
-    public function resetting(Request $request, $resettingToken, ResetPasswordManager $resetPasswordManager) {
+    public function resetting(Request $request, $resettingToken, ResetPasswordManager $resetPasswordManager)
+    {
 
         if (!$resetPasswordManager->isValidToken($resettingToken)) {
-            var_dump('niepoprawny token');exit();
+            var_dump('niepoprawny token');
+            exit();
         }
 
 
@@ -99,7 +104,6 @@ class SecurityController extends AbstractController
             }
 
 
-
         }
 
 
@@ -110,7 +114,6 @@ class SecurityController extends AbstractController
         ]);
 
     }
-
 
 
 }
