@@ -3,6 +3,7 @@
 namespace App\Tests\Functional;
 
 use App\Entity\User;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Client;
@@ -33,6 +34,8 @@ class ProfileControllerTest extends WebTestCase
         ));
 
         $this->em = $this->client->getContainer()->get('doctrine.orm.entity_manager');
+
+
     }
 
     public function logIn() {
@@ -222,5 +225,10 @@ class ProfileControllerTest extends WebTestCase
         /* Verify email address is the same as before send form */
     }
 
+    private function truncateEntities()
+    {
+        $purger = new ORMPurger($this->getEntityManager());
+        $purger->purge();
+    }
 
 }
