@@ -20,30 +20,38 @@ class UserManagerTest extends TestCase
 
     private $userManager;
 
+    private $em;
+
     protected function setUp()
     {
-        $em = $this->createMock(EntityManagerInterface::class);
+        $this->em = $this->createMock(EntityManagerInterface::class);
         $encoder = $this->createMock(UserPasswordEncoderInterface::class);
         $tokenStorage = $this->createMock(TokenStorageInterface::class);
         $session = $this->createMock(SessionInterface::class);
         $mailer = $this->createMock(TwigMailer::class);
 
-        $this->userManager = new UserManager($em, $encoder, $tokenStorage, $session, $mailer);
+        $this->userManager = new UserManager($this->em, $encoder, $tokenStorage, $session, $mailer);
     }
 
 
     public function testCreate()
     {
 
-        $this->userManager = $this->createMock(UserManager::class);
+        //$this->userManager = $this->createMock(UserManager::class);
 
-        $this->userManager->expects($this->once())
+        $user = new User();
+        $user->setPlainPassword('12345')
+            ->setEmail('create@o2.pl');
+
+        $this->userManager->create($user);
+
+        $this->em->expects($this->once())
             ->method('create')
             ->willReturn( array());
 //
-//        $user = new User();
-//        $user->setPlainPassword('12345')
-//            ->setEmail('create@o2.pl');
+        $user = new User();
+        $user->setPlainPassword('12345')
+            ->setEmail('create@o2.pl');
 //
 //        $this->userManager->create($user);
 

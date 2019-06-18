@@ -111,6 +111,9 @@
     "knplabs/knp-paginator-bundle": {
         "version": "v3.0.0"
     },
+    "liip/functional-test-bundle": {
+        "version": "2.0.0-alpha17"
+    },
     "monolog/monolog": {
         "version": "1.24.0"
     },
