@@ -57,16 +57,16 @@ class UserManagerTest extends TestCase
     {
         $this->em = $this->createMock(EntityManagerInterface::class);
         $this->encoder = $this->createMock(UserPasswordEncoderInterface::class);
-        $tokenStorage = $this->createMock(TokenStorageInterface::class);
-        $session = $this->createMock(SessionInterface::class);
-        $mailer = $this->createMock(TwigMailer::class);
+        $this->tokenStorage = $this->createMock(TokenStorageInterface::class);
+        $this->session = $this->createMock(SessionInterface::class);
+        $this->mailer = $this->createMock(TwigMailer::class);
 
         $this->userManager = new UserManager(
             $this->em,
             $this->encoder,
-            $tokenStorage,
-            $session,
-            $mailer
+            $this->tokenStorage,
+            $this->session,
+            $this->mailer
         );
 
         $this->user = $this->createUserObject();
@@ -109,7 +109,16 @@ class UserManagerTest extends TestCase
 
     public function testAuthenticate()
     {
+        $this->tokenStorage->expects($this->once())
+            ->method('setToken')
+            ->withAnyParameters();
 
+        $this->session->expects($this->once())
+            ->method('set')
+            ->withAnyParameters();
+
+        /* Call the tested method */
+        $this->userManager->authenticate($this->user);
     }
 
     public function testCreateToken()
