@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Service\UserManager;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class UserManagerTest extends KernelTestCase
@@ -14,6 +15,7 @@ class UserManagerTest extends KernelTestCase
     /** @var UserManager $userManager */
     public $userManager;
 
+    /** @var EntityManagerInterface $em */
     public $em;
 
     protected function setUp()
@@ -23,8 +25,6 @@ class UserManagerTest extends KernelTestCase
         $this->userManager = self::$container->get(UserManager::class);
 
         $this->em = self::$container->get(EntityManagerInterface::class);
-
-
     }
 
     protected function tearDown()
@@ -81,9 +81,12 @@ class UserManagerTest extends KernelTestCase
 
     public function createFailedProvider()
     {
-        yield [['email' => 'huj112o2.pl', 'password' => '123456', 'roles' => ['ROLE_USER']]];
+        yield [['email' => 'huj112o2.pl', 'password' => null, 'roles' => ['ROLE_USER']]];
     }
 
+    /**
+     * Remove tests data.
+     */
     private function truncateEntities()
     {
         $purger = new ORMPurger($this->em);

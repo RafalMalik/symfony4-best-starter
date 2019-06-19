@@ -177,7 +177,7 @@ class User implements UserInterface
         return $this->plainPassword;
     }
 
-    public function setPlainPassword(?string $plainPassword): self
+    public function setPlainPassword(string $plainPassword): self
     {
         $this->plainPassword = $plainPassword;
 
