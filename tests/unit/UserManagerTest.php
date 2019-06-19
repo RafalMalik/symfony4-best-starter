@@ -80,10 +80,13 @@ class UserManagerTest extends TestCase
 
         $this->em->expects($this->once())
             ->method('persist')
-            ->with(User::class);
+            ->with($this->isInstanceOf(User::class));
 
+        $this->em->expects($this->atLeastOnce())
+            ->method('flush');
+
+        /* Call the tested method */
         $this->userManager->create($user);
-
     }
 
 }
