@@ -124,11 +124,19 @@ class UserManagerTest extends TestCase
     public function testCreateToken()
     {
 
+
+        $this->userManager->createToken($this->user, 'main');
     }
 
     public function testGetUser()
     {
+        $this->em->expects($this->once())
+            ->method('findOneBy')
+            ->with($this->isInstanceOf(array()));
 
+        $this->userManager->getUser([
+            'email' => 'dyzio@o2.pl'
+        ]);
     }
 
 
