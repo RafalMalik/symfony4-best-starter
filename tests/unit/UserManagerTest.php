@@ -48,6 +48,10 @@ class UserManagerTest extends TestCase
      */
     private $userManager;
 
+    /**
+     * @var User
+     */
+    private $user;
 
     protected function setUp()
     {
@@ -64,18 +68,18 @@ class UserManagerTest extends TestCase
             $session,
             $mailer
         );
+
+        $this->user = $this->createUserObject();
     }
 
-
+    /**
+     * Test for method UserManager::create
+     */
     public function testCreate()
     {
-        $user = new User();
-        $user->setPlainPassword('abcdefgh')
-            ->setEmail('create@o2.pl');
-
         $this->encoder->expects($this->once())
             ->method('encodePassword')
-            ->with($user, 'abcdefgh')
+            ->with($this->user, 'abcdefgh')
             ->will($this->returnValue('array'));
 
         $this->em->expects($this->once())
@@ -86,7 +90,46 @@ class UserManagerTest extends TestCase
             ->method('flush');
 
         /* Call the tested method */
-        $this->userManager->create($user);
+        $this->userManager->create($this->user);
+    }
+
+
+    public function testUpdate()
+    {
+        $this->em->expects($this->once())
+            ->method('persist')
+            ->with($this->isInstanceOf(User::class));
+
+        $this->em->expects($this->atLeastOnce())
+            ->method('flush');
+
+        /* Call the tested method */
+        $this->userManager->update($this->user);
+    }
+
+    public function testAuthenticate()
+    {
+
+    }
+
+    public function testCreateToken()
+    {
+
+    }
+
+    public function testGetUser()
+    {
+
+    }
+
+
+
+    public function createUserObject() {
+        $user = new User();
+        $user->setPlainPassword('abcdefgh')
+            ->setEmail('create@o2.pl');
+
+        return $user;
     }
 
 }
