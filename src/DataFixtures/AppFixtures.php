@@ -1,15 +1,12 @@
 <?php
 
-namespace App\DataFixtures\ORM;
+namespace App\DataFixtures;
 
 use App\Entity\User;
-use AppBundle\Entity\Enclosure;
-use AppBundle\Entity\Security;
-use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
+class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
@@ -24,10 +21,4 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 
         $manager->flush();
     }
-
-    public function getOrder()
-    {
-        return 2;
-    }
-
 }
