@@ -3,6 +3,7 @@
 namespace App\Tests\Functional;
 
 
+use App\DataFixtures\AppFixtures;
 use App\Entity\User;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManager;
@@ -31,18 +32,13 @@ class ProfileControllerTest extends WebTestCase
     public function setUp()
     {
         $this->loadFixtures([
-            LoadBasicParkData::class,
-            LoadSecurityData::class,
+            AppFixtures::class
         ]);
 
 
         $this->client = $this->makeClient(false, array(
             'HTTP_HOST'       => 'localhost:1182',
         ));
-
-//        $this->client = static::createClient(array(), array(
-//            'HTTP_HOST'       => 'localhost:1182',
-//        ));
 
         $this->em = $this->client->getContainer()->get('doctrine.orm.entity_manager');
     }
@@ -84,7 +80,7 @@ class ProfileControllerTest extends WebTestCase
         $this->logIn();
 
         /* Go to profile page and check status = 200 */
-        $crawler = $this->client->request('GET', '/profile');
+        $crawler = $this->client->request('/profile');
 
         /* Handle redirect after success login to app/index page */
         //$crawler = $this->client->followRedirect();

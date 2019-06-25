@@ -2,8 +2,9 @@
 
 namespace App\Tests\Functional;
 
-use Symfony\Bundle\FrameworkBundle\Client;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\DataFixtures\AppFixtures;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Symfony\Component\BrowserKit\Client;
 
 class RegistrationControllerTest extends WebTestCase
 {
@@ -13,7 +14,11 @@ class RegistrationControllerTest extends WebTestCase
 
     public function setUp()
     {
-        $this->client = static::createClient(array(), array(
+        $this->loadFixtures([
+            AppFixtures::class
+        ]);
+
+        $this->client = $this->makeClient(false, array(
             'HTTP_HOST'       => 'localhost:1182',
         ));
     }
@@ -28,7 +33,8 @@ class RegistrationControllerTest extends WebTestCase
     {
         /* Go to register page and check that status = 200 */
         $this->client->request('GET', '/register');
-        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+
+        $this->assertStatusCode(200, $this->client);
 
         /* Fill register form  */
         $this->client->submitForm('Register', [
@@ -42,7 +48,7 @@ class RegistrationControllerTest extends WebTestCase
         /* Check that page after redirect contains search phrase */
         $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("Sign In")')->count()
+            $crawler->filter('h1:contains("Hello AppController!")')->count()
         );
     }
 

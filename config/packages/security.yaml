@@ -1,8 +1,7 @@
 security:
     encoders:
         App\Entity\User:
-              algorithm: bcrypt
-              cost: 12
+              algorithm: auto
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
@@ -50,4 +49,4 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/reset-request, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: ROLE_USER }
+        #- { path: ^/, roles: ROLE_USER }
