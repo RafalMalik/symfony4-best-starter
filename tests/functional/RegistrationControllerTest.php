@@ -52,6 +52,7 @@ class RegistrationControllerTest extends WebTestCase
         );
     }
 
+
     public function successRegisterProvider()
     {
         yield [['email' => 'neewcecadasdczz3m123zcxza3w3dail@1oa9.pl', 'password' => '123456']];
@@ -59,4 +60,47 @@ class RegistrationControllerTest extends WebTestCase
     }
 
 
+
+    /**
+     * Check that user successfully register with valid data.
+     *
+     * @dataProvider failedRegisterProvider
+     * @param $registration
+     */
+    public function testFailedRegister($registration)
+    {
+        /* Go to register page and check that status = 200 */
+        $this->client->request('GET', '/register');
+
+        $this->assertStatusCode(200, $this->client);
+
+        /* Fill register form  */
+        $this->client->submitForm('Register', [
+            'registration_form[email]' => $registration['email'],
+            'registration_form[plainPassword]' => $registration['password'],
+        ]);
+
+
+        var_dump($this->client->getResponse()->getContent());
+
+        $crawler = $this->client->getCrawler();
+
+        /* Handle redirect after success login */
+        //$crawler = $this->client->followRedirect();
+
+
+
+        /* Check that page after redirect contains search phrase */
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("There is already an account with this email")')->count()
+        );
+    }
+
+
+    public function failedRegisterProvider()
+    {
+        yield [['email' => 'user2@test.pl', 'password' => '123456']];
+        //yield [['email' => 'newweczxwazcmasdasd1123czxcwacail@o11c0.pl', 'password' => '123456']];
+    }
 }
