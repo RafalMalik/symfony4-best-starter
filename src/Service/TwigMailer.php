@@ -9,7 +9,6 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Templating\EngineInterface;
 
-
 class TwigMailer
 {
 
@@ -50,7 +49,8 @@ class TwigMailer
      * Send registration email after create user.
      * @param User $user
      */
-    public function registration(User $user) {
+    public function registration(User $user)
+    {
         $this->send(
             'User created',
             $user->getEmail(),
@@ -62,14 +62,12 @@ class TwigMailer
      * Send resetting email after change request.
      * @param User $user
      */
-    public function resetting(User $user) {
+    public function resetting(User $user)
+    {
         $this->send(
             'Reset password',
             $user->getEmail(),
             'email/resetting.html.twig'
         );
     }
-
-
-
 }

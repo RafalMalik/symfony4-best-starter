@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 /**
  * @Route("/user")
  */
@@ -32,7 +31,9 @@ class UserController extends AbstractController
         return $this->render('user/index.html.twig', [
             'pagination' => $paginator->paginate(
                 $userRepository->findAll(),
-                $request->query->getInt('page', 1),     10)
+                $request->query->getInt('page', 1),
+                10
+            )
         ]);
     }
 
@@ -49,7 +50,6 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $userManager->create($user);
 
             return $this->redirectToRoute('app_user_index');
@@ -72,7 +72,6 @@ class UserController extends AbstractController
         return $this->render('user/show.html.twig', [
             'user' => $user
         ]);
-
     }
 
     /**
@@ -90,7 +89,6 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $userManager->update($user);
 
             return $this->redirectToRoute('app_user_index');
@@ -116,5 +114,4 @@ class UserController extends AbstractController
             'controller_name' => 'UserController',
         ]);
     }
-
 }

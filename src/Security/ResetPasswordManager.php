@@ -38,8 +38,7 @@ class ResetPasswordManager
         UserPasswordEncoderInterface $passwordEncoder,
         TwigMailer $twigMailer,
         UserManager $userManager
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;

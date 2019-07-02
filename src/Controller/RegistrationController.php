@@ -27,7 +27,6 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $userManager->create($user);
 
             return $this->redirectToRoute('app_index');
@@ -39,11 +38,11 @@ class RegistrationController extends AbstractController
     }
 
 
-    public function confirmation() {
-
+    public function confirmation()
+    {
     }
 
-    public function confirm() {
-
+    public function confirm()
+    {
     }
 }

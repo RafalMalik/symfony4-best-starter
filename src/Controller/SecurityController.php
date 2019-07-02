@@ -59,11 +59,8 @@ class SecurityController extends AbstractController
          */
 
         if ($request->isMethod('POST') && $request->request->get('email')) {
-
             try {
-
                 $resetPasswordManager->processRequest($request->request->get('email'));
-
             } catch (\Exception $e) {
                 var_dump('nie ma takiego emaila');
             }
@@ -85,7 +82,6 @@ class SecurityController extends AbstractController
      */
     public function resetting(Request $request, $resettingToken, ResetPasswordManager $resetPasswordManager)
     {
-
         if (!$resetPasswordManager->isValidToken($resettingToken)) {
             var_dump('niepoprawny token');
             exit();
@@ -93,7 +89,6 @@ class SecurityController extends AbstractController
 
 
         if ($request->isMethod('POST')) {
-
             try {
                 $resetPasswordManager->changePassword($resettingToken, $request->request->get('password'));
 
@@ -102,8 +97,6 @@ class SecurityController extends AbstractController
                 var_dump('COS NIE TAK KURWA');
                 exit();
             }
-
-
         }
 
 
@@ -112,8 +105,5 @@ class SecurityController extends AbstractController
         return $this->render('security/resetting.html.twig', [
             'error' => []
         ]);
-
     }
-
-
 }

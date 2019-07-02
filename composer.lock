@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "897c0ed0332ac4a6b2844bbfa257b64b",
+    "content-hash": "b019e6e66726b12c11c88a4e78276dcf",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -6103,6 +6103,67 @@
     ],
     "packages-dev": [
         {
+            "name": "ajgon/lint-pack",
+            "version": "1.2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ajgon/lint-pack.git",
+                "reference": "f423176985d0be47f5add7bd62a9314ee73c515d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ajgon/lint-pack/zipball/f423176985d0be47f5add7bd62a9314ee73c515d",
+                "reference": "f423176985d0be47f5add7bd62a9314ee73c515d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/console": ">=2.1",
+                "symfony/framework-bundle": ">=2.1",
+                "symfony/process": ">=2.1"
+            },
+            "require-dev": {
+                "phpmd/phpmd": ">=2.0",
+                "phpunit/phpunit": "4.5.*",
+                "sebastian/phpcpd": ">=2.0",
+                "squizlabs/php_codesniffer": ">=2.0",
+                "symfony/twig-bundle": ">=2.1"
+            },
+            "suggest": {
+                "phpmd/phpmd": "Set lint_pack.phpmd.bin = bin/phpmd and you have embeded phpmd out of the box",
+                "sebastian/phpcpd": "Set lint_pack.phpcpd.bin = bin/phpcpd and you have embeded phpcpd out of the box",
+                "squizlabs/php_codesniffer": "Set lint_pack.phpcs.bin = bin/phpcs and you have embeded phpcs out of the box"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Ajgon\\LintPackBundle": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Igor Rzegocki",
+                    "email": "ajgon@irgon.com",
+                    "homepage": "http://rzegocki.pl/"
+                }
+            ],
+            "description": "Various linters for your Symfony2 project",
+            "homepage": "https://github.com/ajgon/lint-pack",
+            "keywords": [
+                "csslint",
+                "jshint",
+                "lint",
+                "phpcs",
+                "phpmd",
+                "twig"
+            ],
+            "time": "2015-07-13T22:29:55+00:00"
+        },
+        {
             "name": "doctrine/data-fixtures",
             "version": "v1.3.1",
             "source": {
@@ -7548,7 +7609,8 @@
     "stability-flags": {
         "escapestudios/symfony2-coding-standard": 20,
         "liip/functional-test-bundle": 15,
-        "phpmd/phpmd": 0
+        "phpmd/phpmd": 0,
+        "ajgon/lint-pack": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

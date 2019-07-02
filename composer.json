@@ -45,7 +45,7 @@
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*",
         "symfony/web-server-bundle": "4.3.*",
-        "phpdocumentor/phpdocumentor": "2.*"
+        "ajgon/lint-pack": "1.2.*@dev"
     },
     "config": {
         "preferred-install": {

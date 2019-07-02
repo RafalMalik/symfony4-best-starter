@@ -34,8 +34,7 @@ class UserManager
         TokenStorageInterface $tokenStorage,
         SessionInterface $session,
         TwigMailer $twigMailer
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->passwordEncoder = $passwordEncoder;
         $this->tokenStorage = $tokenStorage;
@@ -68,7 +67,6 @@ class UserManager
 
             return $user;
         } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $exception) {
-
             return null;
         }
     }

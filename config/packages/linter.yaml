@@ -1,0 +1,28 @@
+lint_pack:
+  phpcs:
+    # Path to the phpcs binary.
+    # required: yes, default: "phpcs"
+    bin: "vendor/bin/phpcs"
+    # Display warnings?
+    # required: no, default: false
+    warnings: false
+    # Enable recursion over directories?
+    # required: no, default: true
+    recursion: false
+    # Coding standard against which files will be checked.
+    # Can contain ruleset path.
+    # required: false, default: PSR2
+    standard: PEAR
+    # List of extensions which will be included for parsing
+    # required: no, default: ["php"]
+    extensions:
+      - php
+      - php5
+    # List of filespaths to ignore.
+    # required: no, default: []
+    ignores:
+      - "ignore.php"
+    # List of locations scanned for files.
+    # required: no, default: ["%kernel.root_dir%/../src"]
+    locations:
+      - "%kernel.root_dir%/my-source"

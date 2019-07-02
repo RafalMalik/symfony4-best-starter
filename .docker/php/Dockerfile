@@ -46,10 +46,16 @@ RUN wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.3/wkh
 RUN tar vxf wkhtmltox-0.12.3_linux-generic-amd64.tar.xz
 RUN cp wkhtmltox/bin/wk* /usr/local/bin/
 
+### INSTALL PHPDOX ###
 RUN wget http://phpdox.de/releases/phpdox.phar
 RUN chmod +x phpdox.phar
 RUN mv phpdox.phar /usr/local/bin/phpdox
 RUN phpdox --version
+
+### INSTALL DEPLOYER ###
+RUN curl -LO https://deployer.org/deployer.phar
+RUN mv deployer.phar /usr/local/bin/dep
+RUN chmod +x /usr/local/bin/dep
 
 ### RUN DOCKER ENTRYPOINT WITH ALL INITIALIZE PROCESS ##
 COPY docker-php-entrypoint.sh /usr/local/bin/docker-php-entrypoint

@@ -1,4 +1,7 @@
 {
+    "ajgon/lint-pack": {
+        "version": "1.2.x-dev"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {

@@ -26,7 +26,6 @@ class ProfileController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             $oldPassword = $form->get('oldPassword')->getData();
 
             if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
@@ -66,12 +65,9 @@ class ProfileController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-
         }
 
 
@@ -93,5 +89,4 @@ class ProfileController extends AbstractController
             'user' => $user ?? $this->getUser()
         ]);
     }
-
 }
