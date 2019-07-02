@@ -121,8 +121,7 @@ class ProfileControllerTest extends WebTestCase
 
     public function testProfileFailedEdit()
     {
-        $this->markTestSkipped('SKIP');
-
+        //$this->markTestSkipped('SKIP');
 
 
         /* LogIn to application */
@@ -166,42 +165,78 @@ class ProfileControllerTest extends WebTestCase
             $crawler->filter('html:contains("invalid form data")')->count()
         );
 
+        //var_dump($this->client->getResponse()->getContent());
+
         /* Verify email address is the same as before send form */
+//        $this->assertEquals(
+//            $this->user->getEmail(),
+//            $crawler->filter('#profile_email')->attr('value')
+//        );
+    }
+
+    /**
+     * @dataProvider successEditProfileProvider
+     *
+     * Test profile/edit page success edit
+     * @param $data
+     */
+
+    public function testProfileSuccessEdit($data)
+    {
+        /* LogIn to application */
+        $this->logIn();
+
+        /* Go to profile page and check status = 200 */
+        $crawler = $this->client->request('GET', '/profile/edit');
+
+        /* Check that response status is HTTP::OK */
+        $this->assertStatusCode(200, $this->client);
+
+        //var_dump($this->client->getResponse()->getContent());
+
+        /* Check that page after redirect contains search phrase */
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("profile/edit")')->count()
+        );
+
+        /* Check that data in form are real and equals the log in user data */
         $this->assertEquals(
             $this->user->getEmail(),
+            $crawler->filter('#profile_email')->attr('value')
+        );
+
+        /* Change email value to invalid - phrase without @ (at) symbol */
+        /* Fill login form  */
+        $crawler = $this->client->submitForm('Submit', [
+            'profile[email]' => $data['email']
+        ]);
+
+        /* Check that response status is HTTP::OK */
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+
+        /* Check that data in form are real and equals the log in user data */
+        $this->assertEquals(
+            $data['email'],
             $crawler->filter('#profile_email')->attr('value')
         );
     }
 
     /**
-     * Test profile/edit page success edit
+     * Data provider to testProfileSuccessEdit
+     *
+     * @return \Generator
      */
 
-    public function testProfileSuccessEdit()
+    public function successEditProfileProvider()
     {
-        /* LogIn to application */
-
-        /* Go to profile page and check status = 200 */
-
-        /* Check that h1 contains "profile/edit" */
-
-        /* Check that data in form are real and equals the log in user data */
-
-        /* Change email value to valid - add '1' symbol before email address */
-
-        /* Send form and handle redirect */
-
-        /* Check that we are on profile/index page */
-
-        /* Check status */
-
-        /* Test email address is equals with user */
+        yield [['email' => 'user111@test.pl']];
+        yield [['email' => 'user121@test.pl']];
     }
 
 
     /**
-     * Test profile/change-password page failed edit
-     * @todo Create this test.
+     * Test profile/change-password page failed edit.
      */
 
     public function testProfileFailedChangePassword()
