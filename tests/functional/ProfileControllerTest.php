@@ -236,11 +236,54 @@ class ProfileControllerTest extends WebTestCase
 
 
     /**
+     * @dataProvider failedChangePasswordProvider
+     *
      * Test profile/change-password page failed edit.
      */
 
-    public function testProfileFailedChangePassword()
+    public function testProfileFailedChangePassword($data)
     {
+        /* LogIn to application */
+        $this->logIn();
+
+        /* Go to profile page and check status = 200 */
+        $crawler = $this->client->request('GET', '/profile/change-password');
+
+        /* Check that response status is HTTP::OK */
+        $this->assertStatusCode(200, $this->client);
+
+        /* Check that page after redirect contains search phrase */
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("profile/change-password")')->count()
+        );
+
+        /* Fill login form  */
+        $crawler = $this->client->submitForm('Submit', [
+            'change_password[oldPassword]' => $data['password'],
+            'change_password[plainPassword][first]' => $data['first'],
+            'change_password[plainPassword][second]' => $data['second']
+        ]);
+
+        $this->client->followRedirect();
+
+        /* Check that response status is HTTP::OK */
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+
+        var_dump($this->client->getResponse()->getContent());
+
+
+
+
+        /* Check that data in form are real and equals the log in user data */
+//        $this->assertEquals(
+//            $data['email'],
+//            $crawler->filter('#profile_email')->attr('value')
+//        );
+
+
+
+
         /* LogIn to application */
 
         /* Go to profile page and check status = 200 */
@@ -258,6 +301,19 @@ class ProfileControllerTest extends WebTestCase
         /* Verify email address is the same as before send form */
     }
 
+
+    /**
+     * Data provider to testProfileFailedChangePassword
+     *
+     * @return \Generator
+     */
+
+    public function failedChangePasswordProvider()
+    {
+        yield [['password' => '123456', 'first' => '', 'second' => '']];
+        //yield [['password' => '123456', 'first' => '123', 'second' => '123']];
+        yield [['password' => '123456', 'first' => '1243', 'second' => '1234']];
+    }
 
 
 }
