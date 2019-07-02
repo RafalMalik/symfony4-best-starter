@@ -42,10 +42,13 @@ RUN wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.3/wkh
 RUN tar vxf wkhtmltox-0.12.3_linux-generic-amd64.tar.xz
 RUN cp wkhtmltox/bin/wk* /usr/local/bin/
 
-CMD php bin/console --no-interaction doctrine:migrations:migrate
+COPY docker-php-entrypoint.sh /usr/local/bin/docker-php-entrypoint
+RUN chmod +x /usr/local/bin/docker-php-entrypoint
 
 WORKDIR /home/wwwroot/s4bs/
 ##</romaricp>##
+
+ENTRYPOINT ["docker-php-entrypoint"]
 
 EXPOSE 9000
 CMD ["php-fpm"]
