@@ -80,15 +80,7 @@ class RegistrationControllerTest extends WebTestCase
             'registration_form[plainPassword]' => $registration['password'],
         ]);
 
-
-        var_dump($this->client->getResponse()->getContent());
-
         $crawler = $this->client->getCrawler();
-
-        /* Handle redirect after success login */
-        //$crawler = $this->client->followRedirect();
-
-
 
         /* Check that page after redirect contains search phrase */
         $this->assertGreaterThan(
@@ -101,6 +93,5 @@ class RegistrationControllerTest extends WebTestCase
     public function failedRegisterProvider()
     {
         yield [['email' => 'user2@test.pl', 'password' => '123456']];
-        //yield [['email' => 'newweczxwazcmasdasd1123czxcwacail@o11c0.pl', 'password' => '123456']];
     }
 }

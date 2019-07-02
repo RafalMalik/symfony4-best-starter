@@ -2,7 +2,8 @@
 
 namespace App\Tests\Functional;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\DataFixtures\AppFixtures;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class SecurityControllerTest extends WebTestCase
 {
@@ -10,7 +11,11 @@ class SecurityControllerTest extends WebTestCase
 
     public function setUp()
     {
-        $this->client = static::createClient(array(), array(
+        $this->loadFixtures([
+            AppFixtures::class
+        ]);
+
+        $this->client = $this->makeClient(false, array(
             'HTTP_HOST'       => 'localhost:1182',
         ));
     }
@@ -25,13 +30,16 @@ class SecurityControllerTest extends WebTestCase
     {
         /* Go to login page and check that status = 200 */
         $this->client->request('GET', '/login');
+
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
         /* Fill login form  */
-        $this->client->submitForm('Sign in', [
+        $this->client->submitForm('Login', [
             'email' => $credentials['email'],
             'password' => $credentials['password'],
         ]);
+
+        var_dump($this->client->getResponse()->getContent());
 
         /* Handle redirect after success login */
         $crawler = $this->client->followRedirect();
@@ -45,8 +53,8 @@ class SecurityControllerTest extends WebTestCase
 
     public function successLoginProvider()
     {
-        yield [['email' => 'huj@o2.pl', 'password' => '123456']];
-        yield [['email' => 'dyzio@o2.pl', 'password' => '123456']];
+        yield [['email' => 'user1@test.pl', 'password' => '2345']];
+        yield [['email' => 'user2@test.pl', 'password' => '2345']];
     }
 
 
@@ -62,7 +70,7 @@ class SecurityControllerTest extends WebTestCase
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
         /* Fill form with invalid data */
-        $this->client->submitForm('Sign in', [
+        $this->client->submitForm('Login', [
             'email' => $credentials['email'],
             'password' => $credentials['password'],
         ]);
@@ -85,6 +93,8 @@ class SecurityControllerTest extends WebTestCase
         yield [['email' => 'huj3@o2.pl', 'password' => '123456']];
         yield [['email' => 'huj4@o2.pl', 'password' => '123456']];
         yield [['email' => 'huj5@o2.pl', 'password' => '123456']];
+        yield [['email' => 'huj@o2.pl', 'password' => '123456']];
+        yield [['email' => 'dyzio@o2.pl', 'password' => '123456']];
         yield [['email' => 'huj@o2.pl', 'password' => '12345']];
     }
 
