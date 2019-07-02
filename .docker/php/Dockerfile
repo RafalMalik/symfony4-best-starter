@@ -4,9 +4,9 @@ FROM php:7.2.3-fpm
 RUN apt-get update \
     && apt-get install -y --no-install-recommends vim curl debconf subversion git apt-transport-https apt-utils \
     build-essential locales acl mailutils wget nodejs zip unzip \
-    gnupg gnupg1 gnupg2
+    gnupg gnupg1 gnupg2 libxslt-dev
 
-RUN docker-php-ext-install pdo pdo_mysql bcmath
+RUN docker-php-ext-install pdo pdo_mysql bcmath xsl
 
 COPY php.ini /usr/local/etc/php/php.ini
 COPY php-fpm-pool.conf /etc/php/7.2.3/pool.d/www.conf
