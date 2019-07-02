@@ -94,24 +94,23 @@ class ProfileControllerTest extends WebTestCase
             $crawler->filter('html:contains("' . $this->user->getEmail() . '")')->count()
         );
 
-        /* Go to profile with parameter = 4 */
+        /* Check h3 tag contains different email address */
+        $user = $this->em->getRepository(User::class)->findBy(array(), array(), 1, 1)[0];
+
         /* Go to profile page and check status = 200 */
-        $crawler = $this->client->request('GET', '/profile/4');
+        $crawler = $this->client->request('GET', '/profile/' . $user->getId());
 
         /* Check status = 200 */
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
         /* Check h3 tag contains different email address */
         $this->assertEquals(
-            1,
+            0,
             $crawler->filter('html:contains("' . $this->user->getEmail() . '")')->count()
         );
 
-        /* Check h3 tag contains different email address */
-        $user = $this->em->getRepository(User::class)->find(3);
-
         $this->assertEquals(
-            0,
+            1,
             $crawler->filter('html:contains("' . $user->getEmail() . '")')->count()
         );
     }

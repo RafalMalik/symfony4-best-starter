@@ -68,10 +68,9 @@ class ProfileController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
 
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
 
         }
 

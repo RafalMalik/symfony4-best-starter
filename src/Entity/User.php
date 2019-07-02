@@ -62,7 +62,6 @@ class User implements UserInterface
 
     /**
      * User constructor.
-     * @param $createdAt
      */
     public function __construct()
     {
@@ -73,6 +72,13 @@ class User implements UserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getEmail(): ?string
@@ -94,7 +100,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -121,7 +127,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
@@ -207,4 +213,6 @@ class User implements UserInterface
 
         return $this;
     }
+
+
 }
