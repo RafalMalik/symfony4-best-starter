@@ -39,8 +39,6 @@ class SecurityControllerTest extends WebTestCase
             'password' => $credentials['password'],
         ]);
 
-        var_dump($this->client->getResponse()->getContent());
-
         /* Handle redirect after success login */
         $crawler = $this->client->followRedirect();
 
@@ -53,8 +51,8 @@ class SecurityControllerTest extends WebTestCase
 
     public function successLoginProvider()
     {
-        yield [['email' => 'user1@test.pl', 'password' => '2345']];
-        yield [['email' => 'user2@test.pl', 'password' => '2345']];
+        yield [['email' => 'user1@test.pl', 'password' => '123456']];
+        yield [['email' => 'user2@test.pl', 'password' => '123456']];
     }
 
 
