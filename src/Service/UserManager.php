@@ -63,7 +63,7 @@ class UserManager
             $this->entityManager->flush();
 
             /* Send registration email to user */
-            //$this->mailer->registration($user);
+            $this->mailer->registration($user);
 
             return $user;
         } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $exception) {
