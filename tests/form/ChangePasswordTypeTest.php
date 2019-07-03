@@ -14,11 +14,11 @@ class ChangePasswordTypeTest extends TypeTestCase
             'test2' => 'test2',
         ];
 
-        $objectToCompare = new User();
+        $objectToCompare = array();
         // $objectToCompare will retrieve data from the form submission; pass it as the second argument
         $form = $this->factory->create(ChangePasswordType::class, $objectToCompare);
 
-        $object = new User();
+        $object = array();
         // ...populate $object properties with the data stored in $formData
 
         // submit the data to the form directly
@@ -28,12 +28,5 @@ class ChangePasswordTypeTest extends TypeTestCase
 
         // check that $objectToCompare was modified as expected when the form was submitted
         $this->assertEquals($object, $objectToCompare);
-
-        $view = $form->createView();
-        $children = $view->children;
-
-        foreach (array_keys($formData) as $key) {
-            $this->assertArrayHasKey($key, $children);
-        }
     }
 }
