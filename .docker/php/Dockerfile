@@ -57,6 +57,11 @@ RUN curl -LO https://deployer.org/deployer.phar
 RUN mv deployer.phar /usr/local/bin/dep
 RUN chmod +x /usr/local/bin/dep
 
+### INSTALL PHP-CS-FIXER ###
+RUN wget https://cs.symfony.com/download/php-cs-fixer-v2.phar -O php-cs-fixer
+RUN chmod a+x php-cs-fixer
+RUN mv php-cs-fixer /usr/local/bin/php-cs-fixer
+
 ### RUN DOCKER ENTRYPOINT WITH ALL INITIALIZE PROCESS ##
 COPY docker-php-entrypoint.sh /usr/local/bin/docker-php-entrypoint
 RUN chmod +x /usr/local/bin/docker-php-entrypoint
