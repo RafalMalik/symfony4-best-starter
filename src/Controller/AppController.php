@@ -16,4 +16,14 @@ class AppController extends AbstractController
             'controller_name' => 'AppController',
         ]);
     }
+
+    /**
+     * @Route("/", name="api_doc")
+     */
+    public function apiDoc()
+    {
+        return $this->render('app/index.html.twig', [
+            'controller_name' => 'AppController',
+        ]);
+    }
 }
