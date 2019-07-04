@@ -199,8 +199,8 @@ class UserControllerTest extends WebTestCase
         /* Check that page after redirect contains flashbag info */
         $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("The email is not a valid email.")')->count() ||
-            $crawler->filter('html:contains("Your password should be at least 6 characters.")')->count()
+            $crawler->filter('html:contains("The email is not a valid email")')->count() +
+            $crawler->filter('html:contains("Your password should be at least 6 characters")')->count()
         );
     }
 
@@ -224,7 +224,7 @@ class UserControllerTest extends WebTestCase
         $this->logIn();
 
         /* Go to profile page and check status = 200 */
-        $crawler = $this->client->request('GET', '/user/show');
+        $crawler = $this->client->request('GET', '/user/show/' . $this->user->getId());
 
         /* Check that response status is HTTP::OK */
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
@@ -236,24 +236,23 @@ class UserControllerTest extends WebTestCase
         );
 
         /* Check that profile data are equals with stored user */
-        $user = $this->em->getRepository(User::class)->find(3);
-
         $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("' . $user->getEmail() . '")')->count()
+            $crawler->filter('html:contains("' . $this->user->getEmail() . '")')->count()
         );
     }
 
     /**
+     * @dataProvider successEditProvider
      * Test to user/edit action
      */
-    public function testEdit()
+    public function testSuccessEdit($data)
     {
         /* LogIn to application */
         $this->logIn();
 
         /* Go to profile page and check status = 200 */
-        $crawler = $this->client->request('GET', '/user/edit');
+        $crawler = $this->client->request('GET', '/user/edit/' . $this->user->getId());
 
         /* Check that response status is HTTP::OK */
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
@@ -266,11 +265,20 @@ class UserControllerTest extends WebTestCase
 
         /* Fill form and create user */
         $crawler = $this->client->submitForm('Create', [
-            'user[email]' => 'email@o2.pl'
+            'user[email]' => $data['email'],
+            'user[plainPassword]' => $data['password']
         ]);
 
-        /* Check that response status is HTTP::OK */
+        $crawler = $this->client->followRedirect();
+
+            /* Check that response status is HTTP::OK */
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+
+        /* Check that page after redirect contains search phrase */
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("user/show")')->count()
+        );
 
         /* Check that page after redirect contains flashbag info */
         $this->assertGreaterThan(
@@ -278,6 +286,21 @@ class UserControllerTest extends WebTestCase
             $crawler->filter('html:contains("User has been edited")')->count()
         );
 
+        /* Check that profile data are equals with stored user */
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("' . $data['email'] . '")')->count()
+        );
+    }
+
+    /**
+     * Data provider for test success edit
+     */
+    public function successEditProvider()
+    {
+        yield [['email' => 'email@03.pl', 'password' => '123456']];
+        yield [['email' => 'email@03.pl', 'password' => '1234568']];
+        yield [['email' => 'email@03.pl', 'password' => '12fdsfdsf']];
     }
 
     /**

@@ -96,7 +96,11 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $userManager->update($user);
 
-            return $this->redirectToRoute('app_user_index');
+            $this->addFlash('notice', 'User has been edited.');
+
+            return $this->redirectToRoute('app_user_show', [
+                'user' => $user->getId()
+            ]);
         }
 
         return $this->render('user/edit.html.twig', [
