@@ -55,6 +55,8 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $userManager->create($user);
 
+            $this->addFlash('notice', 'User has been added.');
+
             return $this->redirectToRoute('app_user_index');
         }
 

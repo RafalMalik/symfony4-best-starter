@@ -2,6 +2,7 @@
 
 namespace App\Tests\Functional;
 
+use App\DataFixtures\AppFixtures;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Client;
@@ -28,8 +29,12 @@ class UserControllerTest extends WebTestCase
      */
     public function setUp()
     {
+        $this->loadFixtures([
+            AppFixtures::class
+        ]);
+
         $this->client = $this->makeClient(false, array(
-            'HTTP_HOST' => 'localhost:1182',
+            'HTTP_HOST'       => 'localhost:1182',
         ));
 
         $this->em = $this->client->getContainer()->get('doctrine.orm.entity_manager');
@@ -107,8 +112,10 @@ class UserControllerTest extends WebTestCase
         );
     }
 
-
-    public function testNew()
+    /**
+     * @dataProvider successWewProvider
+     */
+    public function testSuccessNew($data)
     {
         /* LogIn to application */
         $this->logIn();
@@ -126,12 +133,13 @@ class UserControllerTest extends WebTestCase
         );
 
         /* Fill form and create user */
-        $crawler = $this->client->submitForm('Create', [
-            'user[email]' => 'email@o2.pl'
+        $this->client->submitForm('Create', [
+            'user[email]' => $data['email'],
+            'user[plainPassword]' => $data['password']
         ]);
 
         /* Check that we are redirect to user list with flash message */
-        //$crawler = $this->client->followRedirect();
+        $crawler = $this->client->followRedirect();
 
         /* Check that response status is HTTP::OK */
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
@@ -139,8 +147,18 @@ class UserControllerTest extends WebTestCase
         /* Check that page after redirect contains flashbag info */
         $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("User has been added")')->count()
+            $crawler->filter('html:contains("User has been added.")')->count()
         );
+    }
+
+    /**
+     * Data provider for testNew
+     */
+    public function successWewProvider()
+    {
+        yield [['email' => 'email@o2.pl', 'password' => '123456']];
+        yield [['email' => 'esadmail@o2.pl', 'password' => '12asd3456']];
+        yield [['email' => 'emkozakail@oasd2.pl', 'password' => '123asd456']];
     }
 
     /**
