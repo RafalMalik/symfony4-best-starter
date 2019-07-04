@@ -52,14 +52,11 @@ class RegistrationControllerTest extends WebTestCase
         );
     }
 
-
     public function successRegisterProvider()
     {
         yield [['email' => 'neewcecadasdczz3m123zcxza3w3dail@1oa9.pl', 'password' => '123456']];
         yield [['email' => 'newweczxwazcmasdasd1123czxcwacail@o11c0.pl', 'password' => '123456']];
     }
-
-
 
     /**
      * Check that user successfully register with valid data.

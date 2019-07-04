@@ -29,6 +29,8 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $userManager->create($user);
 
+            $userManager->authenticate($user);
+
             return $this->redirectToRoute('app_index');
         }
 
