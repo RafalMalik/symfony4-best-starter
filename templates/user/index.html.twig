@@ -1,13 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}user/index{% endblock %}
 
 {% block body %}
-    <h1>user/index</h1>
+    <a href="{{ path('app_user_new') }}" class="btn btn-success">{{ 'create'|trans }}</a>
 
-    <a href="{{ path('app_user_new') }}" class="app-user-index-btn-new">{{ 'create'|trans }}</a>
-
-    <table class="table table-hover">
+    <table class="table table-hover mt-3">
         <thead>
         <tr>
             <th scope="col">ID</th>
@@ -18,7 +16,6 @@
         </thead>
         <tbody>
 
-
         {% for user in pagination %}
 
             <tr>
@@ -26,9 +23,15 @@
                 <td>{{ user.email }}</td>
                 <td></td>
                 <td>
-                    <a href="{{ path('app_user_show', {user: user.id}) }}">{{ 'show'|trans }}</a>
-                    <a href="{{ path('app_user_edit', {user: user.id}) }}">{{ 'edit'|trans }}</a>
-                    <a href="{{ path('app_user_delete', {user: user.id  }) }}">{{ 'delete'|trans }}</a>
+                    <a href="{{ path('app_user_show', {user: user.id}) }}" class="btn btn-info">
+                        {{ 'show'|trans }}
+                    </a>
+                    <a href="{{ path('app_user_edit', {user: user.id}) }}" class="btn btn-warning">
+                        {{ 'edit'|trans }}
+                    </a>
+                    <a href="{{ path('app_user_delete', {user: user.id  }) }}" class="btn btn-danger">
+                        {{ 'delete'|trans }}
+                    </a>
                 </td>
             </tr>
 

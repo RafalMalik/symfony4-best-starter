@@ -41,6 +41,9 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="app_user_new")
      *
+     * @param Request $request
+     * @param UserManager $userManager
+     * @return RedirectResponse|Response
      * @todo Make action when admin can generate user,
      */
     public function new(Request $request, UserManager $userManager)
