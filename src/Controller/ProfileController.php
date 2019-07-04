@@ -39,7 +39,7 @@ class ProfileController extends AbstractController
                 $em->persist($user);
                 $em->flush();
 
-                $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
+                $this->addFlash('notice', 'Password has been changed.');
 
                 return $this->redirectToRoute('app_profile');
             } else {

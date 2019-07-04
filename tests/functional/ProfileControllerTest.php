@@ -313,13 +313,13 @@ class ProfileControllerTest extends WebTestCase
         );
 
         /* Fill login form  */
-        $crawler = $this->client->submitForm('Submit', [
+        $this->client->submitForm('Submit', [
             'change_password[oldPassword]' => $data['password'],
             'change_password[plainPassword][first]' => $data['first'],
             'change_password[plainPassword][second]' => $data['second']
         ]);
 
-        $this->client->followRedirect();
+        $crawler = $this->client->followRedirect();
 
         /* Check that response status is HTTP::OK */
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
