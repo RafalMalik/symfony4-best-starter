@@ -28,7 +28,7 @@ class UserControllerTest extends WebTestCase
      */
     public function setUp()
     {
-        $this->client = static::createClient(array(), array(
+        $this->client = $this->makeClient(false, array(
             'HTTP_HOST' => 'localhost:1182',
         ));
 
@@ -70,9 +70,7 @@ class UserControllerTest extends WebTestCase
         $this->logIn();
 
         /* Go to profile page and check status = 200 */
-        $this->client->request('GET', '/user');
-
-        $crawler = $this->client->followRedirect();
+        $crawler = $this->client->request('GET', '/user/');
 
         /* Check that response status is HTTP::OK */
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
@@ -86,16 +84,21 @@ class UserControllerTest extends WebTestCase
         /* Check that user table row are equal summary number of users */
         $users = $this->em->getRepository(User::class)->findAll();
 
+        /* Check pagination element */
+        $this->assertGreaterThanOrEqual(
+            count($users) / 10,
+            $crawler->filter('.pagination .current, .pagination .page')->count()
+        );
+
+        /* Check that page has exactly 10 element */
         $this->assertEquals(
-            count($users),
+            10,
             $crawler->filter('.table-row')->count()
         );
 
         /* Click button "NEW" and redirect to new page */
-        $btnNew    = $crawler->filter('.app-user-index-btn-new')->eq(0)->link();
+        $btnNew  = $crawler->filter('.app-btn-new')->eq(0)->link();
         $crawler = $this->client->click($btnNew);
-
-        //$crawler = $this->client->followRedirect();
 
         /* Check that page contains text user/new */
         $this->assertGreaterThan(
