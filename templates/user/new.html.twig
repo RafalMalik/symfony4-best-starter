@@ -4,5 +4,5 @@
 
 {% block body %}
     <h1>user/new</h1>
-    {{ form(form) }}
+    {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
 {% endblock %}

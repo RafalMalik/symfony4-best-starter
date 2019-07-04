@@ -113,7 +113,7 @@ class UserControllerTest extends WebTestCase
     }
 
     /**
-     * @dataProvider successWewProvider
+     * @dataProvider successNewProvider
      */
     public function testSuccessNew($data)
     {
@@ -154,12 +154,66 @@ class UserControllerTest extends WebTestCase
     /**
      * Data provider for testNew
      */
-    public function successWewProvider()
+    public function successNewProvider()
     {
         yield [['email' => 'email@o2.pl', 'password' => '123456']];
         yield [['email' => 'esadmail@o2.pl', 'password' => '12asd3456']];
         yield [['email' => 'emkozakail@oasd2.pl', 'password' => '123asd456']];
     }
+
+    /**
+     * @dataProvider failedNewProvider
+     */
+    public function testFailedNew($data)
+    {
+        /* LogIn to application */
+        $this->logIn();
+
+        /* Go to profile page and check status = 200 */
+        $crawler = $this->client->request('GET', '/user/new');
+
+        /* Check that response status is HTTP::OK */
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+
+        /* Check that page after redirect contains search phrase */
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("user/new")')->count()
+        );
+
+        /* Fill form and create user */
+        $crawler = $this->client->submitForm('Create', [
+            'user[email]' => $data['email'],
+            'user[plainPassword]' => $data['password']
+        ]);
+
+        /* Check that response status is HTTP::OK */
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+
+        /* Check that page after redirect contains search phrase */
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("user/new")')->count()
+        );
+
+        /* Check that page after redirect contains flashbag info */
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("The email is not a valid email.")')->count() ||
+            $crawler->filter('html:contains("Your password should be at least 6 characters.")')->count()
+        );
+    }
+
+    /**
+     * Data provider for test failed new
+     */
+    public function failedNewProvider()
+    {
+        yield [['email' => 'email.pl', 'password' => '123456']];
+        yield [['email' => 'esadmail@o2.pl', 'password' => '12']];
+        yield [['email' => 'emkozakail', 'password' => '']];
+    }
+
 
     /**
      * Test to user/show action
