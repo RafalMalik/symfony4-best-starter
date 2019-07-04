@@ -2,7 +2,7 @@
 
 namespace App\Tests\Functional;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class AppControllerTest extends WebTestCase
 {

@@ -2,11 +2,8 @@
 
 namespace App\Tests\Functional;
 
-
 use App\DataFixtures\AppFixtures;
 use App\Entity\User;
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\BrowserKit\Cookie;
