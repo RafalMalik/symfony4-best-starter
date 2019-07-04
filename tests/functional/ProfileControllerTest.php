@@ -319,16 +319,21 @@ class ProfileControllerTest extends WebTestCase
             'change_password[plainPassword][second]' => $data['second']
         ]);
 
-        //$this->client->followRedirect();
+        $this->client->followRedirect();
 
         /* Check that response status is HTTP::OK */
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
+        /* Check that page after redirect contains search phrase */
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("profile/index")')->count()
+        );
+
         /* Check that data in form are real and equals the log in user data */
         $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("This value is not valid.")')->count() ||
-            $crawler->filter('html:contains("This value is too short.")')->count()
+            $crawler->filter('html:contains("Password has been changed.")')->count()
         );
     }
 

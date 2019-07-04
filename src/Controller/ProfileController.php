@@ -41,7 +41,7 @@ class ProfileController extends AbstractController
 
                 $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
 
-                return $this->redirectToRoute('app_index');
+                return $this->redirectToRoute('app_profile');
             } else {
                 $form->addError(new FormError('Invalid old password'));
             }
@@ -69,7 +69,6 @@ class ProfileController extends AbstractController
             $em->persist($user);
             $em->flush();
         }
-
 
         return $this->render('profile/edit.html.twig', [
             'form' => $form->createView(),
