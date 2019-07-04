@@ -18,6 +18,16 @@ class AppController extends AbstractController
     }
 
     /**
+     * @Route("/dashboard", name="app_dashboard")
+     */
+    public function dashboard()
+    {
+        return $this->render('app/index.html.twig', [
+            'controller_name' => 'AppController',
+        ]);
+    }
+
+    /**
      * @Route("/", name="api_doc")
      */
     public function apiDoc()
