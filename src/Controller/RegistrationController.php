@@ -39,12 +39,24 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-
-    public function confirmation()
+    /**
+     * Redirect after success register to this page.
+     *
+     * @Route("/register/confirmation", name="app_register_confirmation")
+     * @param Request $request
+     */
+    public function confirmation(Request $request)
     {
     }
 
-    public function confirm()
+    /**
+     * Action when user confirm his account.
+     *
+     * @Route("/register/confirm/{token}", name="app_register_confirm")
+     * @param Request $request
+     * @param $token
+     */
+    public function confirm(Request $request, $token)
     {
     }
 }
