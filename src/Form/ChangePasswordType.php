@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 
 class ChangePasswordType extends AbstractType
 {
@@ -18,6 +19,7 @@ class ChangePasswordType extends AbstractType
                 'mapped' => false
             ))
             ->add('plainPassword', RepeatedType::class, array(
+                'constraints' => new Length(['min' => 6]),
                 'mapped' => false,
                 'type' => PasswordType::class,
                 'options' => array(
