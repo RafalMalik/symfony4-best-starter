@@ -369,7 +369,7 @@ class UserControllerTest extends WebTestCase
         $this->logIn();
 
         /* Go to profile page and check status = 200 */
-        $crawler = $this->client->request('GET', '/user/delete');
+        $crawler = $this->client->request('GET', '/user/');
 
         /* Check that response status is HTTP::OK */
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
@@ -377,12 +377,23 @@ class UserControllerTest extends WebTestCase
         /* Check that page after redirect contains search phrase */
         $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("user/delete")')->count()
+            $crawler->filter('html:contains("user/index")')->count()
         );
-//        $crawler = $this->client->followRedirect();
+
+        /* Click button "Delete" and redirect to index page with flashbag */
+        $btnDelete  = $crawler->filter('.table-row .btn-danger')->eq(0)->link();
+        $crawler = $this->client->click($btnDelete);
+
+        $crawler = $this->client->followRedirect();
 
         /* Check that response status is HTTP::OK */
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+
+        /* Check that page contains text user/new */
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("user/index")')->count()
+        );
 
         /* Check that page after redirect contains flashbag info */
         $this->assertGreaterThan(

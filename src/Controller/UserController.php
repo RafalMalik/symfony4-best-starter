@@ -119,8 +119,8 @@ class UserController extends AbstractController
      */
     public function delete(Request $request, User $user, UserManager $userManager)
     {
-        return $this->render('user/delete.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
+        $this->addFlash('notice', 'User has been deleted.');
+
+        return $this->redirectToRoute('app_user_index');
     }
 }
