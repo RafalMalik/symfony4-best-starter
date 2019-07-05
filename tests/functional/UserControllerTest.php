@@ -264,7 +264,7 @@ class UserControllerTest extends WebTestCase
         );
 
         /* Fill form and create user */
-        $crawler = $this->client->submitForm('Create', [
+        $this->client->submitForm('Create', [
             'user[email]' => $data['email'],
             'user[plainPassword]' => $data['password']
         ]);
@@ -302,6 +302,63 @@ class UserControllerTest extends WebTestCase
         yield [['email' => 'email@03.pl', 'password' => '1234568']];
         yield [['email' => 'email@03.pl', 'password' => '12fdsfdsf']];
     }
+
+
+    /**
+     * @dataProvider failedEditProvider
+     * Test to user/edit failed action
+     */
+    public function testFailedEdit($data)
+    {
+        /* LogIn to application */
+        $this->logIn();
+
+        /* Go to profile page and check status = 200 */
+        $crawler = $this->client->request('GET', '/user/edit/' . $this->user->getId());
+
+        /* Check that response status is HTTP::OK */
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+
+        /* Check that page after redirect contains search phrase */
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("user/edit")')->count()
+        );
+
+        /* Fill form and create user */
+        $crawler = $this->client->submitForm('Create', [
+            'user[email]' => $data['email'],
+            'user[plainPassword]' => $data['password']
+        ]);
+
+        /* Check that response status is HTTP::OK */
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+
+        /* Check that page after redirect contains search phrase */
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("user/edit")')->count()
+        );
+
+        /* Check that page after redirect contains flashbag info */
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("The email is not a valid email")')->count() +
+            $crawler->filter('html:contains("Please enter a password")')->count() +
+            $crawler->filter('html:contains("Your password should be at least 6 characters")')->count()
+        );
+    }
+
+    /**
+     * Data provider for test success edit
+     */
+    public function failedEditProvider()
+    {
+        yield [['email' => 'email03.pl', 'password' => '12345']];
+        yield [['email' => 'email@03.pl', 'password' => '']];
+        yield [['email' => 'email@03.pl', 'password' => '12fd']];
+    }
+
 
     /**
      * Test to user/show action
