@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="3.4.2">
+<file name="/home/wwwroot/s4bs/src/Migrations/Version20190424204335.php">
+ <error line="23" column="143" severity="warning" message="Line exceeds 120 characters; contains 143 characters" source="Generic.Files.LineLength.TooLong"/>
+ <error line="25" column="292" severity="warning" message="Line exceeds 120 characters; contains 292 characters" source="Generic.Files.LineLength.TooLong"/>
+ <error line="31" column="143" severity="warning" message="Line exceeds 120 characters; contains 143 characters" source="Generic.Files.LineLength.TooLong"/>
+</file>
+<file name="/home/wwwroot/s4bs/src/Migrations/Version20190531194426.php">
+ <error line="23" column="143" severity="warning" message="Line exceeds 120 characters; contains 143 characters" source="Generic.Files.LineLength.TooLong"/>
+ <error line="25" column="124" severity="warning" message="Line exceeds 120 characters; contains 124 characters" source="Generic.Files.LineLength.TooLong"/>
+ <error line="31" column="143" severity="warning" message="Line exceeds 120 characters; contains 143 characters" source="Generic.Files.LineLength.TooLong"/>
+</file>
+<file name="/home/wwwroot/s4bs/src/Migrations/Version20190430195653.php">
+ <error line="23" column="143" severity="warning" message="Line exceeds 120 characters; contains 143 characters" source="Generic.Files.LineLength.TooLong"/>
+ <error line="31" column="143" severity="warning" message="Line exceeds 120 characters; contains 143 characters" source="Generic.Files.LineLength.TooLong"/>
+</file>
+<file name="/home/wwwroot/s4bs/src/Migrations/Version20190508211352.php">
+ <error line="23" column="143" severity="warning" message="Line exceeds 120 characters; contains 143 characters" source="Generic.Files.LineLength.TooLong"/>
+ <error line="31" column="143" severity="warning" message="Line exceeds 120 characters; contains 143 characters" source="Generic.Files.LineLength.TooLong"/>
+</file>
+<file name="/home/wwwroot/s4bs/src/Security/LoginFormAuthenticator.php">
+ <error line="31" column="199" severity="warning" message="Line exceeds 120 characters; contains 199 characters" source="Generic.Files.LineLength.TooLong"/>
+</file>
+<file name="/home/wwwroot/s4bs/tests/functional/SecurityControllerTest.php">
+ <error line="99" column="1" severity="error" message="The closing brace for the class must go on the next line after the body" source="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody"/>
+</file>
+<file name="/home/wwwroot/s4bs/tests/functional/ProfileControllerTest.php">
+ <error line="43" column="29" severity="error" message="Opening brace should be on a new line" source="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine"/>
+ <error line="351" column="1" severity="error" message="The closing brace for the class must go on the next line after the body" source="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody"/>
+</file>
+<file name="/home/wwwroot/s4bs/tests/functional/UserControllerTest.php">
+ <error line="406" column="1" severity="error" message="The closing brace for the class must go on the next line after the body" source="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody"/>
+</file>
+<file name="/home/wwwroot/s4bs/tests/form/ChangePasswordTypeTest.php">
+ <error line="32" column="1" severity="error" message="Expected 1 newline at end of file; 0 found" source="PSR2.Files.EndFileNewline.NoneFound"/>
+</file>
+<file name="/home/wwwroot/s4bs/tests/unit/UserManagerTest.php">
+ <error line="4" column="1" severity="error" message="There must be one blank line after the namespace declaration" source="PSR2.Namespaces.NamespaceDeclaration.BlankLineAfter"/>
+ <error line="144" column="40" severity="error" message="Opening brace should be on a new line" source="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine"/>
+ <error line="152" column="1" severity="error" message="Expected 1 newline at end of file; 0 found" source="PSR2.Files.EndFileNewline.NoneFound"/>
+ <error line="152" column="1" severity="error" message="The closing brace for the class must go on the next line after the body" source="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody"/>
+</file>
+</checkstyle>
+

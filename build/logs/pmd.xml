@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pmd version="@project.version@" timestamp="2019-07-08T19:35:30+02:00">
+  <file name="/home/wwwroot/s4bs/src/Controller/RegistrationController.php">
+    <violation beginline="48" endline="48" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$request'.
+    </violation>
+    <violation beginline="59" endline="59" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$request'.
+    </violation>
+    <violation beginline="59" endline="59" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$token'.
+    </violation>
+  </file>
+  <file name="/home/wwwroot/s4bs/src/Controller/SecurityController.php">
+    <violation beginline="70" endline="70" rule="ExitExpression" ruleset="Design Rules" externalInfoUrl="http://phpmd.org/rules/design.html#exitexpression" priority="1">
+      The method resetRequest() contains an exit expression.
+    </violation>
+    <violation beginline="87" endline="87" rule="ExitExpression" ruleset="Design Rules" externalInfoUrl="http://phpmd.org/rules/design.html#exitexpression" priority="1">
+      The method resetting() contains an exit expression.
+    </violation>
+    <violation beginline="98" endline="98" rule="ExitExpression" ruleset="Design Rules" externalInfoUrl="http://phpmd.org/rules/design.html#exitexpression" priority="1">
+      The method resetting() contains an exit expression.
+    </violation>
+  </file>
+  <file name="/home/wwwroot/s4bs/src/Controller/UserController.php">
+    <violation beginline="120" endline="120" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$request'.
+    </violation>
+    <violation beginline="120" endline="120" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$user'.
+    </violation>
+    <violation beginline="120" endline="120" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$userManager'.
+    </violation>
+  </file>
+  <file name="/home/wwwroot/s4bs/src/Form/ChangePasswordType.php">
+    <violation beginline="15" endline="15" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$options'.
+    </violation>
+  </file>
+  <file name="/home/wwwroot/s4bs/src/Form/ProfileType.php">
+    <violation beginline="13" endline="13" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$options'.
+    </violation>
+  </file>
+  <file name="/home/wwwroot/s4bs/src/Form/RegistrationFormType.php">
+    <violation beginline="15" endline="15" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$options'.
+    </violation>
+  </file>
+  <file name="/home/wwwroot/s4bs/src/Form/UserType.php">
+    <violation beginline="17" endline="17" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$options'.
+    </violation>
+  </file>
+  <file name="/home/wwwroot/s4bs/src/Migrations/Version20190424204335.php">
+    <violation beginline="20" endline="20" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$schema'.
+    </violation>
+    <violation beginline="28" endline="28" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$schema'.
+    </violation>
+  </file>
+  <file name="/home/wwwroot/s4bs/src/Migrations/Version20190430195653.php">
+    <violation beginline="20" endline="20" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$schema'.
+    </violation>
+    <violation beginline="28" endline="28" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$schema'.
+    </violation>
+  </file>
+  <file name="/home/wwwroot/s4bs/src/Migrations/Version20190508211352.php">
+    <violation beginline="20" endline="20" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$schema'.
+    </violation>
+    <violation beginline="28" endline="28" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$schema'.
+    </violation>
+  </file>
+  <file name="/home/wwwroot/s4bs/src/Migrations/Version20190531194426.php">
+    <violation beginline="20" endline="20" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$schema'.
+    </violation>
+    <violation beginline="28" endline="28" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$schema'.
+    </violation>
+  </file>
+  <file name="/home/wwwroot/s4bs/src/Security/LoginFormAuthenticator.php">
+    <violation beginline="22" endline="95" rule="CouplingBetweenObjects" ruleset="Design Rules" package="App\Security" externalInfoUrl="http://phpmd.org/rules/design.html#couplingbetweenobjects" class="LoginFormAuthenticator" priority="2">
+      The class LoginFormAuthenticator has a coupling between objects value of 14. Consider to reduce the number of dependencies under 13.
+    </violation>
+    <violation beginline="60" endline="60" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$userProvider'.
+    </violation>
+    <violation beginline="82" endline="82" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$token'.
+    </violation>
+  </file>
+  <file name="/home/wwwroot/s4bs/src/Service/TwigMailer.php">
+    <violation beginline="19" endline="19" rule="UnusedPrivateField" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatefield" priority="3">
+      Avoid unused private fields such as '$templating'.
+    </violation>
+  </file>
+</pmd>
