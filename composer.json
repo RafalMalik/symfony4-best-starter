@@ -47,7 +47,8 @@
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*",
         "symfony/web-server-bundle": "4.3.*",
-        "ajgon/lint-pack": "1.2.*@dev"
+        "ajgon/lint-pack": "1.2.*@dev",
+        "phing/phing": "^2.12"
     },
     "config": {
         "preferred-install": {

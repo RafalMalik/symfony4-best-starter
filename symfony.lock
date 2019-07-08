@@ -170,6 +170,9 @@
     "pdepend/pdepend": {
         "version": "2.5.2"
     },
+    "phing/phing": {
+        "version": "2.16.1"
+    },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
     },
@@ -275,9 +278,6 @@
             "bin/console",
             "config/bootstrap.php"
         ]
-    },
-    "symfony/contracts": {
-        "version": "v1.0.2"
     },
     "symfony/css-selector": {
         "version": "v4.2.7"
